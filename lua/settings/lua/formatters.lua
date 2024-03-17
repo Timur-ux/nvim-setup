@@ -28,7 +28,6 @@ local configs = {
 		function()
 			local fileName = util.escape_path(util.get_current_buffer_file_path())
 			local configName = vim.fn.stdpath("config") .. "/formattersSetup/.clang_format"
-			print(configName)
 			return {
 				exe = "clang-format",
 				args = {
@@ -38,6 +37,9 @@ local configs = {
 			}
 		end,
 	},
+  fsharp = {
+    require("formatter.filetypes.fs").fantomas,
+  }
 }
 
 require("formatter").setup({
@@ -48,6 +50,9 @@ require("formatter").setup({
 		lua = configs["lua"],
 		c = configs["cpp"],
 		cpp = configs["cpp"],
+    fs = configs["fsharp"],
+    fsi = configs["fsharp"],
+    fsx = configs["fsharp"],
 		["*"] = {
 			require("formatter.filetypes.any").remove_trailing_whitespace,
 		},

@@ -17,5 +17,14 @@ return {
     config = function()
       require("luasnip.loaders.from_vscode").lazy_load()
     end
+  },
+  {
+    'ionide/Ionide-vim',
+    config = function ()
+      require('ionide').setup({})
+    end
+  },
+  {
+    'regen100/cmake-language-server',
   }
 }

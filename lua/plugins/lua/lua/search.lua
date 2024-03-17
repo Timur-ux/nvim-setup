@@ -12,4 +12,7 @@ return {
     },
     cmd = 'Nerdy',
   },
+  {
+    'romainl/vim-cool'
+  }
 }

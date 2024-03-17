@@ -8,6 +8,9 @@ lsp.clangd.setup({capabilities = lspCapabilities,})
 lsp.pyright.setup({capabilities = lspCapabilities,})
 lsp.ltex.setup({capabilities = lspCapabilities,})
 lsp.lua_ls.setup({capabilities = lspCapabilities,})
+lsp.fsautocomplete.setup({capabilities = lspCapabilities})
+lsp.cmake.setup({capabilities = lspCapabilities})
+
 
 vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -87,3 +90,4 @@ vim.lsp.handlers['textDocument/signatureHelp'] = vim.lsp.with(
   vim.lsp.handlers.signature_help,
   {border = 'rounded'}
 )
+

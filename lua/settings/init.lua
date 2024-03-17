@@ -4,6 +4,8 @@ opt.mouse = ""
 opt.showcmd = true
 
 opt.number = true
+opt.hlsearch = true
+opt.relativenumber = true
 opt.expandtab = true
 opt.tabstop = 2
 opt.autoindent = true
@@ -13,16 +15,17 @@ opt.shiftwidth = 2
 opt.cursorline = true
 opt.termguicolors = true
 
-local prefix = 'settings.lua'
+local prefix = "settings.lua"
 local settingsToLoad = {
-  'debuggers',
-  'linters',
-  'lsp',
-  'cmp',
-  'icons',
-  'formatters'
+	"debuggers",
+	"linters",
+	"lsp",
+	"cmp",
+	"icons",
+	"formatters",
+	"plugins",
 }
 
 for _, setting in ipairs(settingsToLoad) do
-  require(prefix .. '.' .. setting)
+	require(prefix .. "." .. setting)
 end
