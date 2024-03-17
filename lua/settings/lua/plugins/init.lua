@@ -1,7 +1,8 @@
 local plugins = {
   'cmake_tools',
   'lualine',
-  'nvim_tree'
+  'nvim_tree',
+  'LuaSnip'
 }
 
 local prefix = 'settings.lua.plugins.lua.'
