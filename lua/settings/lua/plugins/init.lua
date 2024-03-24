@@ -2,7 +2,9 @@ local plugins = {
   'cmake_tools',
   'lualine',
   'nvim_tree',
-  'LuaSnip'
+  'LuaSnip',
+  'auto_save',
+  'overseer'
 }
 
 local prefix = 'settings.lua.plugins.lua.'

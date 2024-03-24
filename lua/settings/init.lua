@@ -21,7 +21,6 @@ local settingsToLoad = {
 	"linters",
 	"lsp",
 	"cmp",
-	"icons",
 	"formatters",
 	"plugins",
 }

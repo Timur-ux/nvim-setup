@@ -6,7 +6,7 @@ local lspCapabilities = require('cmp_nvim_lsp').default_capabilities()
 
 lsp.clangd.setup({capabilities = lspCapabilities,})
 lsp.pyright.setup({capabilities = lspCapabilities,})
-lsp.ltex.setup({capabilities = lspCapabilities,})
+lsp.texlab.setup({capabilities = lspCapabilities,})
 lsp.lua_ls.setup({capabilities = lspCapabilities,})
 lsp.fsautocomplete.setup({capabilities = lspCapabilities})
 lsp.cmake.setup({capabilities = lspCapabilities})
@@ -70,7 +70,7 @@ end
 sign({name = 'DiagnosticSignError', text = ''})
 sign({name = 'DiagnosticSignWarn', text = ''})
 sign({name = 'DiagnosticSignHint', text = ''})
-sign({name = 'DiagnosticSignInfo', text = '»'})
+sign({name = 'DiagnosticSignInfo', text = ''})
 
 vim.diagnostic.config({
   virtual_text = false,

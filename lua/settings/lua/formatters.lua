@@ -37,9 +37,22 @@ local configs = {
 			}
 		end,
 	},
-  fsharp = {
-    require("formatter.filetypes.fs").fantomas,
-  }
+	latex = {
+		require("formatter.filetypes.tex").latexindent,
+		function()
+			local fileName = util.escape_path(util.get_current_buffer_file_path())
+			local exeName = vim.fn.stdpath("data") .. "/mason/bin/latexindent"
+			return {
+				exe = exeName,
+				args = {
+					fileName,
+				},
+			}
+		end,
+	},
+	-- fsharp = {
+	--   require("formatter.filetypes.fs").fantomas,
+	-- }
 }
 
 require("formatter").setup({
@@ -50,9 +63,10 @@ require("formatter").setup({
 		lua = configs["lua"],
 		c = configs["cpp"],
 		cpp = configs["cpp"],
-    fs = configs["fsharp"],
-    fsi = configs["fsharp"],
-    fsx = configs["fsharp"],
+    tex = configs["latex"],
+		-- fs = configs["fsharp"],
+		-- fsi = configs["fsharp"],
+		-- fsx = configs["fsharp"],
 		["*"] = {
 			require("formatter.filetypes.any").remove_trailing_whitespace,
 		},

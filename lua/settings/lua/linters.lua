@@ -1,8 +1,7 @@
 require('lint').linters_by_ft = {
   markdown = {'vale'},
-  c = {'cppcheck'},
-  cpp = {'cppcheck'},
-  python = {'pylint'},
+  c = {'cpplint'},
+  cpp = {'cpplint'},
   latex = {'chktex'},
 }
 

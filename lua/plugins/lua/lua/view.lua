@@ -1,16 +1,48 @@
 return {
-  {
-    "sainnhe/edge",
-    priority = 1000,
-    name = 'edge',
-    config = function()
-        vim.g.edge_style = 'aura'
-        vim.g.edge_better_performance = 1
-        vim.cmd.colorscheme "edge"
-    end
-  },
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
-  },
+	{
+		"rose-pine/neovim",
+		name = "rose-pine",
+		config = function()
+			require("rose-pine").setup({
+				highlight_groups = {
+					TelescopeBorder = { fg = "overlay", bg = "overlay" },
+					TelescopeNormal = { fg = "subtle", bg = "overlay" },
+					TelescopeSelection = { fg = "text", bg = "highlight_med" },
+					TelescopeSelectionCaret = { fg = "love", bg = "highlight_med" },
+					TelescopeMultiSelection = { fg = "text", bg = "highlight_high" },
+
+					TelescopeTitle = { fg = "base", bg = "love" },
+					TelescopePromptTitle = { fg = "base", bg = "pine" },
+					TelescopePreviewTitle = { fg = "base", bg = "iris" },
+
+					TelescopePromptNormal = { fg = "text", bg = "surface" },
+					TelescopePromptBorder = { fg = "surface", bg = "surface" },
+				},
+			})
+
+      vim.cmd("colorscheme rose-pine")
+		end,
+	},
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		event = "ColorScheme",
+		config = function()
+			require("lualine").setup({
+				options = {
+					--- @usage 'rose-pine' | 'rose-pine-alt'
+					theme = "rose-pine",
+				},
+			})
+		end,
+	},
+	{
+		"rcarriga/nvim-notify",
+		config = function()
+			vim.notify = require("notify")
+		end,
+	},
+	{
+		"stevearc/dressing.nvim",
+	},
 }
