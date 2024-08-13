@@ -18,7 +18,6 @@ opt.termguicolors = true
 local prefix = "settings.lua"
 local settingsToLoad = {
 	"debuggers",
-	"linters",
 	"lsp",
 	"cmp",
 	"formatters",

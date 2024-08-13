@@ -45,24 +45,38 @@ cmp.setup({
 	mapping = {
 		["<C-k>"] = cmp.mapping.select_prev_item(select_opts),
 		["<C-j>"] = cmp.mapping.select_next_item(select_opts),
-		["<C-b>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
 		["<C-Space>"] = cmp.mapping.confirm({ select = true }),
-		["<CR>"] = cmp.mapping.confirm({ select = true }),
+		["<CR>"] = cmp.mapping.confirm({ select = false }),
 		["<C-e>"] = cmp.mapping.abort(),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			elseif has_words_before() then
-				cmp.complete()
+		["<C-f>"] = cmp.mapping(function(fallback)
+			if luasnip.jumpable(1) then
+				luasnip.jump(1)
 			else
 				fallback()
 			end
 		end, { "i", "s" }),
-
-		["<S-Tab>"] = cmp.mapping(function(fallback)
+		["<C-b>"] = cmp.mapping(function(fallback)
 			if luasnip.jumpable(-1) then
 				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+		["<Tab>"] = cmp.mapping(function(fallback)
+			local col = vim.fn.col(".") - 1
+
+			if cmp.visible() then
+				cmp.select_next_item(select_opts)
+			elseif col == 0 or vim.fn.getline("."):sub(col, col):match("%s") then
+				fallback()
+			else
+				cmp.complete()
+			end
+		end, { "i", "s" }),
+
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item(select_opts)
 			else
 				fallback()
 			end

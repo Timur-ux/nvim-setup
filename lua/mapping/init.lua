@@ -3,13 +3,12 @@ local defaultOpts = { noremap = true, silent = true }
 
 vim.g.mapleader = " "
 
-map("i", "jk", "<esc>", { noremap = true })
-map("t", "jk", "<C-\\><C-n>", { noremap = false })
-
-map("n", "<c-s>", ":wa<cr>", defaultOpts)
+map("v", "K", "k", {noremap = false})
+map("i", "jk", "<esc>", defaultOpts)
+map("i", "ол", "<esc>", defaultOpts)
+map("t", "jk", "<C-\\><C-n>", { noremap = false, silent = true })
 
 map("n", "<f4>", ":NvimTreeRefresh<cr>:NvimTreeToggle<cr>", defaultOpts)
-map("n", "<f6>", ':exec &hls? "set nohls!" : "set hls!"<CR>', defaultOpts)
 
 map("", "<up>", ':echoe "use hjkl, bro"<cr>', { noremap = true, silent = false })
 map("", "<down>", ':echoe "use hjkl, bro"<cr>', { noremap = true, silent = false })
@@ -48,10 +47,10 @@ map("n", "<leader><f7>", ":CMakeRun<CR>", defaultOpts)
 map("n", "<leader>dr", [[:lua require("dap").restart()<CR>]], defaultOpts)
 map("n", "<leader>dt", [[:lua require("dap").terminate()<CR>]], defaultOpts)
 map("n", "<leader>db", [[:lua require("dap").toggle_breakpoint()<CR>]], defaultOpts)
-map("n", "<F9>", [[:lua require("dap").continue()<CR>]], defaultOpts)
-map("n", "<F10>", [[:lua require("dap").step_over()<CR>]], defaultOpts)
-map("n", "<F11>", [[:lua require("dap").step_into()<CR>]], defaultOpts)
-map("n", "<S-F11>", [[:lua require("dap").step_out()<CR>]], defaultOpts)
+map("n", "<F8>", [[:lua require("dap").continue()<CR>]], defaultOpts)
+map("n", "<F9>", [[:lua require("dap").step_over()<CR>]], defaultOpts)
+map("n", "<F10>", [[:lua require("dap").step_into()<CR>]], defaultOpts)
+map("n", "<F11>", [[:lua require("dap").step_out()<CR>]], defaultOpts)
 
 map("n", "<M-u><M-t>", [[:lua require("dapui").toggle()<CR>]], defaultOpts)
 map("v", "<M-u><M-k>", [[:lua require("dapui").eval()<CR>]], defaultOpts)

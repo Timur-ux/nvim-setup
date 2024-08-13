@@ -58,4 +58,15 @@ return {
 			})
 		end,
 	},
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "VeryLazy",
+		opts = {},
+		config = function(_, _)
+			local opts = {
+				handler_opts = { border = "rounded" },
+			}
+			require("lsp_signature").setup(opts)
+		end,
+	},
 }

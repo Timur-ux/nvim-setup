@@ -4,8 +4,8 @@ require("neodev").setup({
 })
 
 local dap, dapui = require("dap"), require("dapui")
-dapui.setup({
-	layouts = {
+local customLayouts = {
+	full = {
 		{
 			elements = {
 				{
@@ -30,10 +30,6 @@ dapui.setup({
 					id = "stacks",
 					size = 0.5,
 				},
-				-- {
-				-- 	id = "repl",
-				-- 	size = 0.5,
-				-- },
 				{
 					id = "console",
 					size = 0.5,
@@ -43,6 +39,35 @@ dapui.setup({
 			size = 10,
 		},
 	},
+	lite = {
+		{
+			elements = {
+				{
+					id = "scopes",
+					size = 1,
+				},
+			},
+			position = "left",
+			size = 40,
+		},
+		{
+			elements = {
+				{
+					id = "stacks",
+					size = 0.5,
+				},
+				{
+					id = "console",
+					size = 0.5,
+				},
+			},
+			position = "bottom",
+			size = 10,
+		},
+	},
+}
+dapui.setup({
+	layouts = customLayouts.full,
 })
 
 dap.listeners.before.attach.dapui_config = function()
@@ -64,12 +89,37 @@ dap.adapters.cppdbg = {
 	command = vim.fn.stdpath("data") .. "/mason/bin/OpenDebugAD7",
 }
 
+dap.adapters.coreclr = {
+	type = "executable",
+	command = vim.fn.stdpath("data") .. "/mason/bin/netcoredbg",
+	args = { "--interpreter=vscode" },
+}
+
 dap.configurations.cpp = {
 	{
 		name = "Launch",
 		type = "cppdbg",
 		request = "launch",
 		program = function()
+			dapui.setup({ layouts = customLayouts.full })
+			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+		end,
+		cwd = "${workspaceFolder}",
+		stopAtEntry = true,
+		setupCommands = {
+			{
+				text = "-enable-pretty-printing",
+				description = "enable pretty printing",
+				ignoreFailures = false,
+			},
+		},
+	},
+	{
+		name = "Launch(lite)",
+		type = "cppdbg",
+		request = "launch",
+		program = function()
+			dapui.setup({ layouts = customLayouts.lite })
 			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 		end,
 		cwd = "${workspaceFolder}",
@@ -102,5 +152,16 @@ dap.configurations.cpp = {
 		},
 	},
 }
-
 dap.configurations.c = dap.configurations.cpp
+
+dap.configurations.cs = {
+	{
+		type = "coreclr",
+		name = "launch - netcoredbg",
+		request = "launch",
+		program = function()
+			return vim.fn.input("Path to dll", vim.fn.getcwd() .. "/bin/Debug/", "file")
+		end,
+	},
+}
+dap.configurations.fsharp = dap.configurations.cs

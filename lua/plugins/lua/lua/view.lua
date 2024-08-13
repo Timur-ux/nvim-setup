@@ -17,10 +17,12 @@ return {
 
 					TelescopePromptNormal = { fg = "text", bg = "surface" },
 					TelescopePromptBorder = { fg = "surface", bg = "surface" },
+
+					LspSignatureActiveParameter = { bg = "#aa0000" },
 				},
 			})
 
-      vim.cmd("colorscheme rose-pine")
+			vim.cmd("colorscheme rose-pine")
 		end,
 	},
 	{
