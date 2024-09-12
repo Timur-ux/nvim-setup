@@ -23,7 +23,7 @@ map("n", "<c-u>", "<c-u>zz", defaultOpts)
 map("n", "<c-a>", [[<cmd>lua require('telescope.builtin').find_files()<cr>]], defaultOpts)
 map("n", "<c-p>", [[<cmd>lua require('telescope.builtin').buffers()<cr>]], defaultOpts)
 
-map("n", "<leader>a", [[:lua require('harpoon'):list():append()<CR>]], defaultOpts)
+map("n", "<leader>a", [[:lua require('harpoon'):list():add()<CR>]], defaultOpts)
 map("n", "<leader>d", [[:lua require('harpoon'):list():remove()<CR>]], defaultOpts)
 
 map("n", "<C-t>", [[:lua require('harpoon'):list():prev()<CR>]], defaultOpts)
@@ -54,6 +54,10 @@ map("n", "<F11>", [[:lua require("dap").step_out()<CR>]], defaultOpts)
 
 map("n", "<M-u><M-t>", [[:lua require("dapui").toggle()<CR>]], defaultOpts)
 map("v", "<M-u><M-k>", [[:lua require("dapui").eval()<CR>]], defaultOpts)
+
+map("i", "/**", "<esc>bdw:Dox<CR>", defaultOpts)
+map("i", "##", "<esc>bdw:Dox<CR>", defaultOpts)
+
 
 local harpoon = require("harpoon")
 harpoon:setup({})

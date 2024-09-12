@@ -1,6 +1,6 @@
 require('nvim-treesitter.configs').setup( {
   -- Парсеры, которые мы собираемся использовать
-  ensure_installed = { "c", "python", "cpp", "latex", "lua"},
+  ensure_installed = { "c", "python", "cpp", "lua"},
 
   sync_install = true,
 
