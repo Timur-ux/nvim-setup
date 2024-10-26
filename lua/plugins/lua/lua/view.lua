@@ -1,5 +1,17 @@
 return {
 	{
+		"0styx0/abbreinder.nvim",
+		dependencies = {
+			"0styx0/abbremand.nvim",
+		},
+		config = function()
+			-- config can be empty to stay with defaults
+			-- or anything can be changed, with anything unspecified
+			-- retaining the default values
+			require("abbreinder").setup()
+		end,
+	},
+	{
 		"rose-pine/neovim",
 		name = "rose-pine",
 		config = function()
@@ -32,7 +44,6 @@ return {
 		config = function()
 			require("lualine").setup({
 				options = {
-					--- @usage 'rose-pine' | 'rose-pine-alt'
 					theme = "rose-pine",
 				},
 			})

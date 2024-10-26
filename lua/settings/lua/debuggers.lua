@@ -47,22 +47,22 @@ local customLayouts = {
 					size = 1,
 				},
 			},
-			position = "left",
-			size = 40,
+			position = "bottom",
+			size = 20,
 		},
 		{
 			elements = {
 				{
-					id = "stacks",
-					size = 0.5,
-				},
-				{
 					id = "console",
 					size = 0.5,
 				},
+				{
+					id = "stacks",
+					size = 0.5,
+				},
 			},
-			position = "bottom",
-			size = 10,
+			position = "left",
+			size = 40,
 		},
 	},
 }
