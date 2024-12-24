@@ -25,6 +25,7 @@ lsp.ionide.setup({
 	end,
 })
 lsp.cmake.setup({ capabilities = lspCapabilities })
+lsp.ts_ls.setup({capabilities = lspCapabilities})
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.api.nvim_create_autocmd("LspAttach", {
