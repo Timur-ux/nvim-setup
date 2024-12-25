@@ -4,8 +4,10 @@ local plugins = {
 	"nvim_tree",
 	"LuaSnip",
 	"auto_save",
-	"overseer",
 	"markdown",
+  "obsidian",
+  "autopairs",
+  "vimtex",
 }
 
 local prefix = "settings.lua.plugins.lua."

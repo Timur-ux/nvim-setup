@@ -1,0 +1,103 @@
+global !p
+
+def toDefine(line, suffix="_HPP_"):
+	def repl(match):
+		return "_"+match.group(0)
+
+	return re.sub("[A-Z]", repl, line).upper()[1:] + suffix
+
+def toDefine_inplace(line):
+	return line.upper().replace(" ", "_")
+
+endglobal
+
+extends c
+
+snippet for "for(...;..;...) {}" w
+for(${1:size_t} ${2:i} = ${3:0}; $2 < $4; ${5:++$2}) {
+	$6
+}
+$0
+endsnippet
+
+snippet if "if(...)" w
+if(${1:condition}) {
+	$2
+}
+$0
+endsnippet
+
+snippet ife "if(...) else" w
+if(${1:condition}) {
+	$2
+} else {
+	$3
+}
+$0
+endsnippet
+
+snippet fora "for(auto:iterable)" w
+for(${1:auto&} ${2:elem} : ${3:iterable}) {
+	$4
+}
+$0
+endsnippet
+
+snippet while "while(cond) {...}" w
+while(${1:condition}) {
+	$2
+}
+$0
+endsnippet
+
+snippet fun "func definition" w
+${1:void} ${3:name}(${4:args}){$5}
+$0
+endsnippet
+
+
+snippet cl "class definition" wb
+class ${1:ClassName} {
+private:
+	$2
+public:
+	$0
+};
+endsnippet
+
+snippet cla "full one file class definition" wb
+#ifndef `!p snip.rv = toDefine(t[1])`
+#define `!p snip.rv = toDefine(t[1])`
+
+class $1 {
+private:
+	$0
+public:
+
+};
+
+#endif // !`!p snip.rv = toDefine(t[1])`
+endsnippet
+
+
+snippet ifn "#ifndef #define #endif" wb
+#ifndef $1`!p t[1] = toDefine_inplace(t[1])`_HPP_
+#define $1_HPP_
+$0
+#endif // !$1_HPP_
+endsnippet
+
+snippet name "namespace ... {}" wb
+namespace $1 {
+$0
+} // !$1;
+endsnippet
+
+snippet all "std::begin(...), std::end(...)" i
+std::begin(${1:${VISUAL}}), std::end($1)$0
+endsnippet
+
+snippet cout "std::cout << ... << std::endl;" wb
+std::cout << $0${1:<< std::endl};
+endsnippet
+

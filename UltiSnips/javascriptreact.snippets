@@ -1,0 +1,19 @@
+global !p
+
+def first_letter_upper(s):
+	return s[0].upper() + s[1:]
+
+endglobal
+
+extends javascript
+
+snippet comp "full component template" bw
+import React from "react";
+
+const ${1:CompName} = (${2:props}) => {
+	$0
+}`!p t[1] = first_letter_upper(t[1])`
+
+export default $1;
+endsnippet
+

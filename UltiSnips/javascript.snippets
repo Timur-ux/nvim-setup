@@ -1,0 +1,123 @@
+global !p
+
+def selectActionNames(actionsPlaceholder):
+	matches = re.finditer(r"(\w+)\s*\(state,\s*action\)", actionsPlaceholder)
+	if matches is not None:
+		return ", ".join([match.group(1) for match in matches])
+	return ""
+
+endglobal
+
+priority 10
+snippet < "<tag />" i
+<${1:${VISUAL}}$2/>$0
+endsnippet
+
+snippet if "if(){...}" wb
+if($1) {
+	$0
+}
+endsnippet
+
+snippet a "anon function (visual) => {...}" w
+(${1:${VISUAL}}) => $0
+endsnippet
+
+
+priority 100
+snippet << "<tag>...</tag>" i
+<$1$2>
+${3:${VISUAL}}
+</$1>
+endsnippet
+
+snippet aa "anon function with body" w
+(${1:${VISUAL}}) => {
+	$0
+}
+endsnippet
+snippet act "action creator" w
+${1:name}(state, action) {
+	state.$2
+},$0
+endsnippet
+
+snippet slice "slice template" wb
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+	data: ${1:data in storage},
+};
+
+const ${2:name}Slice = createSlice({
+	name: "$2",
+	initialState,
+	reducers: {
+		$3
+	},
+	});
+
+export const {`!p snip.rv = selectActionNames(t[3])`} = $2Slice.actions;
+export default $2Slice.reducer;
+
+export const select`!p snip.rv = t[2][0].upper() + t[2][1:]` = (state) => state.$2.data;
+endsnippet
+
+snippet tslice "slice with thunk" wb
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+
+export const $4 = createAsyncThunk("$2/$4", async () => {
+${8:	const response = await client.get("$9");
+	return response.data;
+}
+});
+
+const initialState = {
+	data: ${1:data in storage},
+	status: "idle",
+	error: null,
+};
+
+const ${2:name}Slice = createSlice({
+	name: "$2",
+	initialState,
+	reducers: {
+		$10
+	},
+	${3:extraReducers: (builder) =>
+		builder
+			.addCase(
+				${4:thunk name}.pending,
+				(state, action) => {
+					state.status = "pending";$5
+				},
+			)
+			.addCase($4.fulfilled, (state, action) => {
+				state.status = "succeeded";$6
+			})
+			.addCase($4.rejected, (state, action) => {
+				state.status = "failed";
+				${7:state.error = action.error.message ?? "Unknown Error";}
+			}),}
+	});
+
+export const {`!p snip.rv = selectActionNames(t[10])`} = $2Slice.actions;
+export default $2Slice.reducer;
+
+export const select`!p snip.rv = t[2][0].upper() + t[2][1:]` = (state) => state.$2.data;
+
+export const select`!p snip.rv = t[2][0].upper() + t[2][1:]`Status = (state) => state.$2.status;
+export const select`!p snip.rv = t[2][0].upper() + t[2][1:]`Error = (state) => state.$2.error;
+endsnippet
+
+snippet switch "switch(...) {case ...:}" wb
+switch($1) {
+	case $2:
+		$4
+	break;
+	case $3:
+		$5
+	break;
+}
+endsnippet
+

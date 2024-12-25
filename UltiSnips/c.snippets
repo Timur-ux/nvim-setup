@@ -1,0 +1,18 @@
+
+
+priority -1
+
+snippet debug "#ifdef DEBUG ... #endif" wb
+#ifdef ${1:DEBUG}
+$0
+#endif // !$1
+endsnippet
+
+snippet main "int main(...) {}" wb
+int main(int argc, char * argw[]) {
+	$0
+
+	return 0;
+}
+endsnippet
+

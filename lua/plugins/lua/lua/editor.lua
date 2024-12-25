@@ -1,23 +1,12 @@
 return {
 	{
+		"windwp/nvim-autopairs",
+	},
+
+	{
 		"nvim-tree/nvim-tree.lua",
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
-	},
-	{
-		"MunifTanjim/exrc.nvim",
-		config = function()
-			vim.o.exrc = false
-
-			require("exrc").setup({
-				files = {
-					".nvimrc.lua",
-					".nvimrc",
-					".exrc.lua",
-					".exrc",
-				},
-			})
-		end,
 	},
 	{
 		"nvim-lua/popup.nvim",
@@ -35,6 +24,15 @@ return {
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
+			{
+				"quangnguyen30192/cmp-nvim-ultisnips",
+				config = function()
+					-- optional call to setup (see customization section)
+					require("cmp_nvim_ultisnips").setup({})
+				end,
+				-- If you want to enable filetype detection based on treesitter:
+				requires = { "nvim-treesitter/nvim-treesitter" },
+			},
 		},
 	},
 	{

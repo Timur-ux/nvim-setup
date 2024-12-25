@@ -12,8 +12,17 @@ opt.autoindent = true
 opt.softtabstop = 2
 opt.shiftwidth = 2
 
+vim.o.exrc = true
+
 opt.cursorline = true
 opt.termguicolors = true
+opt.clipboard = "unnamedplus"
+
+opt.conceallevel = 2
+vim.g.vim_markdown_conceal = 1
+
+vim.g.tex_conceal = "admsg"
+vim.g.vim_markdown_math = 1
 
 local prefix = "settings.lua"
 local settingsToLoad = {

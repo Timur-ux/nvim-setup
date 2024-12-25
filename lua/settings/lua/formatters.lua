@@ -37,6 +37,18 @@ local configs = {
 			}
 		end,
 	},
+	json = {
+		require("formatter.filetypes.json").prettierd,
+	},
+	python = {
+		require("formatter.filetypes.python").autopep8,
+	},
+	js = {
+		require("formatter.filetypes.javascript").prettierd,
+	},
+	jsx = {
+		require("formatter.filetypes.javascriptreact").prettierd,
+	},
 	latex = {
 		require("formatter.filetypes.tex").latexindent,
 		function()
@@ -50,9 +62,6 @@ local configs = {
 			}
 		end,
 	},
-	-- fsharp = {
-	--   require("formatter.filetypes.fs").fantomas,
-	-- }
 }
 
 require("formatter").setup({
@@ -60,13 +69,14 @@ require("formatter").setup({
 	log_level = vim.log.levels.WARN,
 
 	filetype = {
-		lua = configs["lua"],
+		javascript = configs["js"],
+    lua = configs["lua"],
 		c = configs["cpp"],
 		cpp = configs["cpp"],
-    tex = configs["latex"],
-		-- fs = configs["fsharp"],
-		-- fsi = configs["fsharp"],
-		-- fsx = configs["fsharp"],
+		tex = configs["latex"],
+    json = configs["json"],
+    javascriptreact = configs["jsx"],
+    python = configs["python"],
 		["*"] = {
 			require("formatter.filetypes.any").remove_trailing_whitespace,
 		},

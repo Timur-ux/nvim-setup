@@ -1,0 +1,10 @@
+-- require("obsidian").setup({
+-- 	workspaces = {
+-- 		{
+-- 			name = "personal",
+-- 			path = "~/vaults/obsidian-sync/",
+-- 		},
+-- 	},
+--   wiki_link_func = "prepend_note_id",
+--   ui = {enable = false}
+-- })

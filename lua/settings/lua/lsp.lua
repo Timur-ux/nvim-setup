@@ -6,8 +6,9 @@ local lspCapabilities = require("cmp_nvim_lsp").default_capabilities()
 
 lsp.clangd.setup({ capabilities = lspCapabilities })
 lsp.pyright.setup({ capabilities = lspCapabilities })
-lsp.texlab.setup({ capabilities = lspCapabilities })
 lsp.lua_ls.setup({ capabilities = lspCapabilities })
+lsp.ts_ls.setup({ capabilities = lspCapabilities })
+lsp.glsl_analyzer.setup({ capabilities = lspCapabilities })
 lsp.fsautocomplete.setup({
 	capabilities = lspCapabilities,
 	root_dir = function(fname)
@@ -96,5 +97,56 @@ vim.diagnostic.config({
 })
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
+
+-- prettier setup
+local null_ls = require("null-ls")
+
+null_ls.setup({
+  on_attach = function(client, bufnr)
+    if client.resolved_capabilities.document_formatting then
+      vim.cmd("nnoremap <silent><buffer> <Leader>f :lua vim.lsp.buf.formatting()<CR>")
+
+      -- format on save
+      vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")
+    end
+
+    if client.resolved_capabilities.document_range_formatting then
+      vim.cmd("xnoremap <silent><buffer> <Leader>f :lua vim.lsp.buf.range_formatting({})<CR>")
+    end
+  end,
+})
+
+local prettier = require("prettier")
+
+prettier.setup({
+  bin = 'prettierd', -- or `'prettierd'` (v0.23.3+)
+  filetypes = {
+    "css",
+    "graphql",
+    "html",
+    "javascript",
+    "javascriptreact",
+    "json",
+    "less",
+    "markdown",
+    "scss",
+    "typescript",
+    "typescriptreact",
+    "yaml",
+  },
+  ["null-ls"] = {
+    condition = function()
+      return prettier.config_exists({
+        -- if `false`, skips checking `package.json` for `"prettier"` key
+        check_package_json = true,
+      })
+    end,
+    runtime_condition = function(params)
+      -- return false to skip running prettier
+      return true
+    end,
+    timeout = 5000,
+  }
+})
+
