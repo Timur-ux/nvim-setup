@@ -1,3 +1,10 @@
+local masonPackages = "stylua lua-language-server clangd clang-format cpptools typescript-language-server prettier prettierd pyright autopep8 latexindent texlab cmake-language-server glsl_analyzer bash-language-server"
+local masonWarning = "Make sure that npm, python3 virtualenv installed"
+
+function MasonInstallDefaults()
+  vim.cmd("MasonInstall " .. masonPackages)
+end
+
 return {
 	{
 		"preservim/vim-markdown",
@@ -29,6 +36,9 @@ return {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
+	    config = function(args)
+	      MasonInstallDefaults()
+	    end,
 	},
 	{
 		"p00f/clangd_extensions.nvim",
@@ -48,10 +58,6 @@ return {
 	{
 		"SirVer/ultisnips",
 		init = function()
-			-- vim.g.UltiSnipsExpandTrigger = "<tab>"
-			vim.g.UltiSnipsJumpForwardTrigger = "<c-j>"
-			vim.g.UltiSnipsJumpBackwardTrigger = "<c-k>"
-			vim.g.UltiSnipsSnippetDirectories = { "UltiSnips" }
       vim.g.UltiSnipsEditSplit = "tabdo"
 		end,
 	},

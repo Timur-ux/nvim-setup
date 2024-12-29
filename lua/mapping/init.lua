@@ -7,8 +7,7 @@ vim.g.maplocalleader = ","
 map("v", "K", "k", {noremap = false})
 map("i", "jk", "<esc>", defaultOpts)
 map("i", "JK", "<esc>", defaultOpts)
-map("i", "<leader>ол", "<esc>", defaultOpts)
-map("i", "<leader>OЛ", "<esc>", defaultOpts)
+map("i", "<M-о><M-л>", "<esc>", defaultOpts)
 map("t", "jk", "<C-\\><C-n>", { noremap = false, silent = true })
 map("t", "JK", "<C-\\><C-n>", { noremap = false, silent = true })
 
@@ -100,3 +99,6 @@ function Harpoon_clear()
     list:remove_at(1)
   end
 end
+
+vim.g.UltiSnipsJumpForwardTrigger = "<c-j>"
+vim.g.UltiSnipsJumpBackwardTrigger = "<c-k>"

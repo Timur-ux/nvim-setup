@@ -38,8 +38,8 @@ cmp.setup({
 		end,
 	},
 	mapping = {
-		["<C-k>"] = cmp.mapping.select_prev_item(select_opts),
-		["<C-j>"] = cmp.mapping.select_next_item(select_opts),
+		["<M-k>"] = cmp.mapping.select_prev_item(select_opts),
+		["<M-j>"] = cmp.mapping.select_next_item(select_opts),
 		["<C-Space>"] = cmp.mapping.confirm({ select = true }),
 		["<Tab>"] = function(fallback)
 			if UltiSnips_IsExpandable() then

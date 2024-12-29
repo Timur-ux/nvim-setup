@@ -1,15 +1,10 @@
 return {
-	{
-		"kiyoon/jupynium.nvim",
-		build = "pip3 install --user --break-system-packages .",
-		dependencies = {
-			"rcarriga/nvim-notify", -- optional
-			"stevearc/dressing.nvim", -- optional, UI for :JupyniumKernelSelect
-		},
-	},
+  {
+    "honza/vim-snippets"
+  },
 	{
 		"vim-pandoc/vim-pandoc",
-		-- "vim-pandoc/vim-pandoc-syntax",
+		"vim-pandoc/vim-pandoc-syntax",
 	},
 	{
 		"epwalsh/pomo.nvim",

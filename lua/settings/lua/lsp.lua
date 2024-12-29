@@ -9,23 +9,9 @@ lsp.pyright.setup({ capabilities = lspCapabilities })
 lsp.lua_ls.setup({ capabilities = lspCapabilities })
 lsp.ts_ls.setup({ capabilities = lspCapabilities })
 lsp.glsl_analyzer.setup({ capabilities = lspCapabilities })
-lsp.fsautocomplete.setup({
-	capabilities = lspCapabilities,
-	root_dir = function(fname)
-		return vim.fs.dirname(vim.fs.find(function(name, path)
-      return name:match(".*%.sln$")
-    end, { upward = true })[1])
-	end,
-})
-lsp.ionide.setup({
-	capabilities = lspCapabilities,
-	root_dir = function(fname)
-		return vim.fs.dirname(vim.fs.find(function(name, path)
-      return name:match(".*%.sln$")
-    end, { upward = true })[1])
-	end,
-})
 lsp.cmake.setup({ capabilities = lspCapabilities })
+lsp.texlab.setup({capabilities = lspCapabilities})
+lsp.bashls.setup({capabilities = lspCapabilities})
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 vim.api.nvim_create_autocmd("LspAttach", {

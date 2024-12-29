@@ -21,6 +21,9 @@ opt.clipboard = "unnamedplus"
 opt.conceallevel = 2
 vim.g.vim_markdown_conceal = 1
 
+vim.g.UltiSnipsSnippetDirectories={"UltiSnips", "MyUltiSnips"}
+
+
 vim.g.tex_conceal = "admsg"
 vim.g.vim_markdown_math = 1
 
