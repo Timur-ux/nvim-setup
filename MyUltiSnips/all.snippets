@@ -1,11 +1,23 @@
+global !p
+def wrapSides(t, by="||"):
+	lines = t.split('\n')
+	maxL = max(map(len, lines))
+	for i in range(len(lines)):
+		line = lines[i]#.replace("|", "").strip()
+		# span = " " * ((maxL - len(line)) // 2)
+		span = "  "
+		lines[i] = "|" + span + line + span + "|"
+	
+	result = "|\n|".join(lines)
+	return result
+
+	
+endglobal
 priority -5
-snippet snip "snippet for snippet" b
-`!p snip.rv = "snippet"` ${1:name} "${2:desc}" ${3:modes}
-${0:body}
-`!p snip.rv = "endsnippet\n"`
-endsnippet
 
 snippet box "create box around text" w
-not realized yet
+`!p snip.rv = "-" * (max(map(len, t[1].split("\n"))) + 6)`
+|  $1  |
+`!p snip.rv = "-" * (max(map(len, t[1].split("\n"))) + 6)`
 endsnippet
 

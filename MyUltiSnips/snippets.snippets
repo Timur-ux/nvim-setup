@@ -2,4 +2,10 @@ snippet cont "context" bA
 context "$1"$0
 endsnippet
 
+snippet snip "snippet for snippet" b
+`!p snip.rv = "snippet"` ${1:name} "${2:desc}" ${3:modes}
+${0:body}
+`!p snip.rv = "endsnippet\n"`
+endsnippet
+
 

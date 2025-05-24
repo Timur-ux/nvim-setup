@@ -2,6 +2,29 @@ global !p
 def math():
 	return vim.eval('vimtex#syntax#in_mathzone()') == '1'
 
+def nextChar(c):
+	buf = snip.buffer
+	line = snip.line
+	col = snip.column
+	if col+1 > len(buf[line]) - 1:
+		return False
+	return buf[line][col+1] == c
+
+def deleteNearChars(left=0, right=0):
+	buf = snip.buffer
+	line = snip.line
+	col = snip.column
+	buf[line] = buf[line][:col - left] + buf[line][col + right:]
+	snip.cursor.set(line, col - left)
+	
+def replaceNearCharsBy(left=0, right=0, c=' '):
+	buf = snip.buffer
+	line = snip.line
+	col = snip.column
+	buf[line] = buf[line][:col - left] + c * (right+left) + buf[line][col + right:]
+	snip.cursor.set(line, col+1)
+
+
 # creates smth like
 # start $1 end
 # start $2 end
@@ -24,6 +47,25 @@ def expand_multiline(snip, start, end, line_shift = 0):
 	buf[line] = ""
 	body = create_multiline_placeholder(n, start, end)
 	snip.expand_anon(body)
+
+def create_table_placeholders(rows, cols, sep = ' & ', end = r"\\\\"):
+	result = ""
+	for j in range(cols - 1):
+		result += f"${j+1}" + sep
+	result += f"${cols}"
+	for i in range(1, rows):
+		result +=  end + "\n"
+		for j in range(cols-1):
+			result += f"${i*cols + j+1}" + sep
+		result += f"${i*cols + cols}" 
+	return result
+
+def expand_table_placeholders(snip, sep = " & ", end = r"\\\\"):
+	rows, cols = map(int, snip.buffer[snip.line].strip().split(','))
+	snip.buffer[snip.line] = ""
+	body = create_table_placeholders(rows, cols, sep, end)
+	snip.expand_anon(body)
+			
 endglobal
 
 priority 10
@@ -37,7 +79,8 @@ snippet template "base template for document" bw
 \usepackage{minted}
 \usepackage{amsmath}
 \usepackage{amssymb}
-$1
+${1:\usepackage{graphicx}
+\graphicspath{{$2}}}
 \begin{document}
 $0
 \end{document}
@@ -47,37 +90,35 @@ snippet root "root var for deducting main .tex file" bw
 %! TeX Root = ${1:../*.tex}
 endsnippet
 
-
-
-
 snippet beg "\begin{env} ... \end{env}" bA
 \begin{${1:environment}}
 	$0
 \end{$1}
 endsnippet
 
+snippet align "\begin{align*}...\end{align*}" iA
+\begin{align*}
+	$1
+\end{align*}
+endsnippet
+
 context "math()"
-snippet align "\begin{align}...\end{align}" iA
-\begin{align}
-	$0
-\end{align}
+snippet case "\begin{cases} ... \end{cases}" iA
+\begin{cases}
+	$1
+\end{cases}
 endsnippet
 
 
 snippet mk "Math" wA
-$${1}$`!p
-if t[2] and t[2][0] not in [',', '.', '?', '-', ' ']:
-    snip.rv = ' '
-else:
-    snip.rv = ''
-`$2
+$${1}$
 endsnippet
 
 snippet dm "Math" wA
 \[
 $1
 .\]
-$2
+$0
 endsnippet
 
 context "math()"
@@ -128,7 +169,6 @@ snippet '((\d+)|(\d*)(\\)?([A-Za-z]+)((\^|_)(\{\d+\}|\d))*)/' "Fraction" wrA
 \\frac{`!p snip.rv = match.group(1)`}{$1}$0
 endsnippet
 
-
 priority 1000
 context "math()"
 snippet '^.*\)/' "() Fraction" wrA
@@ -152,12 +192,12 @@ snippet '(\w+)\.par' "word to parethnesses" wr
 endsnippet
 
 context "math()"
-snippet "bar" "line over arg" riA
+snippet "bar" "line over arg" ri
 \overline{$1}$0
 endsnippet
 
 context "math()"
-snippet "hat" "hat over arg" riA
+snippet "hat" "hat over arg" ri
 \hat{$1}$0
 endsnippet
 
@@ -177,18 +217,13 @@ snippet lim "\lim" iA
 endsnippet
 
 context "math()"
-snippet f "f: R -> R" i
-${1:f}\: : ${2:\mathbb{R}} \to ${3:\mathbb{R}}$0
-endsnippet
-
-context "math()"
 snippet -> "\to" iA
-\to
+\to 
 endsnippet
 
 context "math()"
 snippet !> "\mapsto" iA
-\mapsto
+\mapsto 
 endsnippet
 
 priority 100
@@ -222,9 +257,17 @@ snippet sss "\subsubsection{...}" bw
 \subsubsection{$0}
 endsnippet
 
+snippet sss* "\subsubsection*{...}" bw
+\subsubsection*{$0}
+endsnippet
+
 priority 20
 snippet ss "\subsection{...}" bw
 \subsection{$0}
+endsnippet
+
+snippet ss* "\subsection*{...}" bw
+\subsection*{$0}
 endsnippet
 
 priority 10
@@ -232,8 +275,12 @@ snippet s "\section{...}" bw
 \section{$0}
 endsnippet
 
-snippet " \\item" " \\item$0" iA
-	\\item$0
+snippet s* "\section*{...}" bw
+\section*{$0}
+endsnippet
+
+snippet it " \item$0" i
+\\item $0
 endsnippet
 
 
@@ -242,6 +289,12 @@ snippet 'ben(\d+)' "\begin{enumerate}...\end{enumerate}" rwb
 \begin{enumerate}
 `!p snip.rv = match.group(1)`$0
 \end{enumerate}
+endsnippet
+
+context "math()"
+post_jump "expand_table_placeholders(snip, ' & ', r'\\\\\\\\')"
+snippet 'phds[_]?(\d+),(\d+)' "creates table of placeholders" rwb
+`!p snip.rv = f"{match.group(1)},{match.group(2)}"`$0
 endsnippet
 
 post_jump "expand_multiline(snip, '\\item ', '')"
@@ -273,4 +326,268 @@ endsnippet
 snippet pb "\pagebreak" wb
 \pagebreak
 endsnippet
+
+context "math()"
+snippet cal "\mathcal{...}" iA
+\mathcal{$1}$0
+endsnippet
+
+context "math()"
+snippet bb "\mathbb{...}" iA
+\mathbb{$1}$0
+endsnippet
+
+priority 100
+snippet bf "\textbf" w
+\textbf{$1}$0
+endsnippet
+
+snippet ita "\textit" w
+\textit{$1}$0
+endsnippet
+
+priority 10
+context "math()"
+snippet @e "\varepsilon" iA
+\varepsilon
+endsnippet
+
+context "math()"
+snippet @m "\mu" iA
+\mu
+endsnippet
+
+context "math()"
+snippet @t "\tau" iA
+\tau
+endsnippet
+
+context "math()"
+snippet @a "\alpha" iA
+\alpha
+endsnippet
+
+context "math()"
+snippet @b "\beta" iA
+\beta
+endsnippet
+
+context "math()"
+snippet @l "\lambda" iA
+\lambda
+endsnippet
+
+context "math()"
+snippet @o "\omega" iA
+\omega
+endsnippet
+
+context "math()"
+snippet @O "\Omega" iA
+\Omega
+endsnippet
+
+context "math()"
+snippet @d "\delta" iA
+\delta
+endsnippet
+
+context "math()"
+snippet @D "\Delta" iA
+\Delta
+endsnippet
+
+context "math()"
+snippet @p "\pi" iA
+\pi
+endsnippet
+
+context "math()"
+snippet xi "\xi" iA
+\xi 
+endsnippet
+
+context "math()"
+snippet sim "\sim" iA
+\sim 
+endsnippet
+
+context "math()"
+snippet == "\equiv" iA
+\equiv 
+endsnippet
+
+priority 1000
+context "math()"
+snippet <=> "\Longleftrightarrow" iA
+\Longleftrightarrow 
+endsnippet
+
+priority 10
+context "math()"
+snippet U "\underset" i
+\underset{$1}{${VISUAL}}$0
+endsnippet
+
+context "math()"
+snippet O "\overset" i
+\overset{$1}{${VISUAL}}$0
+endsnippet
+
+snippet thrm "teorem" wb
+\begin{theorem}\textbf{$1}
+$2
+\\\\\\textbf{Доказательство:} $0
+\end{theorem}
+endsnippet
+
+context "math()"
+snippet txt "\text{...}" iA
+\text{$1}$0
+endsnippet
+
+context "math()"
+snippet '\\ ' "space to real space" riA
+ \: 
+endsnippet
+
+
+context "math()"
+snippet phi "\varphi" iA
+\varphi
+endsnippet
+
+context "math()"
+snippet @s "\sigma" iA
+\sigma
+endsnippet
+
+context "math()"
+snippet @S "\Sigma" iA
+\Sigma
+endsnippet
+
+context "math()"
+snippet @r "\rho" iA
+\rho
+endsnippet
+
+context "math()"
+snippet ast "\ast" iA
+\ast
+endsnippet
+
+context "math()"
+snippet lr "\left \right" i
+\left{$1} $2 \right{$1}$0
+endsnippet
+
+context "math()"
+snippet Lr "\Left \Right" i
+\Left{$1} $2 \Right{$1}$0
+endsnippet
+
+priority 1000
+context "math() and nextChar(')')"
+pre_expand "deleteNearChars(2, 2)"
+snippet lr( "\left(... \right)" iA
+\left($1\right)$0
+endsnippet
+
+context "math()"
+snippet lra "\langle... \rangle" iA
+\langle $1\rangle$0
+endsnippet
+
+context "math() and nextChar(']')"
+pre_expand "deleteNearChars(2, 2)"
+snippet "lr\[" "\left[... \right]" riA
+\left[$1\right]$0
+endsnippet
+
+context "math() and nextChar('}')"
+pre_expand "deleteNearChars(2, 2)"
+snippet "lr{" "\left{... \right}" riA
+\left\\{$1\right\\}$0
+endsnippet
+
+context "math()"
+snippet lr| "\left|... \right|" iA
+\left|$1\right|$0
+endsnippet
+
+priority 10
+snippet def "definition" wb
+\\textbf{Определение:} 
+endsnippet
+
+snippet state "statement" wb
+\\textbf{Утверждение:} 
+endsnippet
+
+snippet evi "evidence" wb
+\\textbf{Доказательство:} 
+endsnippet
+
+snippet note "note" wb
+\\textbf{Замечание:} 
+endsnippet
+
+
+context "math()"
+snippet ex "exists symbol" iA
+\exists
+endsnippet
+
+context "math()"
+snippet all "for all symbol" iA
+\forall
+endsnippet
+
+context "math()"
+snippet ubrace "brace under VISUAL with text" iA
+\underbrace{${1:${VISUAL}}}_{$2}$0
+endsnippet
+
+context "math()"
+snippet obrace "brace over VISUAL with text" iA
+\overbrace{${1:${VISUAL}}}^{$2}$0
+endsnippet
+
+context "math()"
+snippet sqrt "\sqrt{...}" iA
+\sqrt{${1:${VISUAL}}}$0
+endsnippet
+
+context "math()"
+snippet => "\implies" iA
+\implies
+endsnippet
+
+context "math()"
+snippet :x "cross symb aka x" iA
+\times
+endsnippet
+
+context "math()"
+snippet xx "\times(aka :x)" iA
+\times
+endsnippet
+
+context "math()"
+snippet :bx "cross in box symb" iA
+\boxtimes
+endsnippet
+
+context "math()"
+snippet v... "\vdots" iA
+\vdots
+endsnippet
+
+context "math()"
+snippet cdot "\cdot" iA
+\cdot
+endsnippet
+
+
 

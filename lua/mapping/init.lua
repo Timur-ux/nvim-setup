@@ -4,7 +4,7 @@ local defaultOpts = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
-map("v", "K", "k", {noremap = false})
+map("v", "K", "k", { noremap = false })
 map("i", "jk", "<esc>", defaultOpts)
 map("i", "JK", "<esc>", defaultOpts)
 map("i", "<M-о><M-л>", "<esc>", defaultOpts)
@@ -20,15 +20,12 @@ map("n", "<leader>tt", ":tabnew<CR>:terminal<CR>", defaultOpts)
 map("n", "<leader>tn", ":tabnew<CR>", defaultOpts)
 map("n", "<leader>tc", ":tabclose<CR>", defaultOpts)
 
-map("n", "<leader>gdl", "gd<C-W>v<C-W>L", { noremap = false, silent = true })
+map("n", "<leader>gdl", "<C-W>v<C-W>lgd", { noremap = false, silent = true })
 map("n", "<leader>gdh", "<C-W>vgd", { noremap = false, silent = true })
+map("n", "<leader>gdj", "<C-W>s<C-W>jgd", { noremap = false, silent = true })
+map("n", "<leader>gdk", "<C-W>sgd", { noremap = false, silent = true })
 
 map("n", "<f4>", ":NvimTreeRefresh<cr>:NvimTreeToggle<cr>", defaultOpts)
-
-map("", "<up>", ':echoe "use hjkl, bro"<cr>', { noremap = true, silent = false })
-map("", "<down>", ':echoe "use hjkl, bro"<cr>', { noremap = true, silent = false })
-map("", "<left>", ':echoe "use hjkl, bro"<cr>', { noremap = true, silent = false })
-map("", "<right>", ':echoe "use hjkl, bro"<cr>', { noremap = true, silent = false })
 
 map("n", "<f5>", ':exec &nu? "set rnu!" : "set nornu!"<cr>', defaultOpts)
 
@@ -47,10 +44,8 @@ map("n", "<C-n>", [[:lua require('harpoon'):list():next()<CR>]], defaultOpts)
 map("n", "<leader>f", ":Format<CR>", defaultOpts)
 map("n", "<leader>F", ":FormatWrite<CR>", defaultOpts)
 
-
 map("n", "<leader>T", ":ToggleTerm<CR>", defaultOpts)
 map("n", "<leader><f7>", ":CMakeRun<CR>", defaultOpts)
-
 
 map("n", "<M-d><M-r>", [[:lua require("dap").restart()<CR>]], defaultOpts)
 map("n", "<M-d><M-t>", [[:lua require("dap").terminate()<CR>]], defaultOpts)
@@ -59,13 +54,28 @@ map("n", "<M-d><M-b>", [[:lua require("dap").toggle_breakpoint()<CR>]], defaultO
 map("n", "<F8>", [[:lua require("dap").continue()<CR>]], defaultOpts)
 map("n", "<F9>", [[:lua require("dap").step_over()<CR>]], defaultOpts)
 map("n", "<F10>", [[:lua require("dap").step_into()<CR>]], defaultOpts)
-map("n", "<F11>", [[:lua require("dap").step_out()<CR>]], defaultOpts)
+map("n", "<leader><F11>", [[:lua require("dap").step_out()<CR>]], defaultOpts)
 
 map("n", "<M-u><M-t>", [[:lua require("dapui").toggle()<CR>]], defaultOpts)
 map("v", "<M-u><M-k>", [[:lua require("dapui").eval()<CR>]], defaultOpts)
 
-
-
+map("n", "<leader>yl", [[:lua require("yeet").list_cmd()<CR>]], defaultOpts)
+map("n", "\\\\", [[:lua require("yeet").execute()<CR>]], defaultOpts)
+map(
+	"n",
+	"<leader>\\",
+	[[:lua require("yeet").execute(nil, { clear_before_yeet = false, interrupt_before_yeet = true, })<CR>]],
+	defaultOpts
+)
+map(
+	"v",
+	"\\\\",
+	[[:lua require("yeet").execute_selection({ yeet_and_run = true, clear_before_yeet = false, })<CR>]],
+	defaultOpts
+)
+map("n", "<leader>yt", [[:lua require("yeet").select_target()<CR>]], defaultOpts)
+map("n", "<leader>yo", [[:lua require("yeet").toggle_post_write()<CR>]], defaultOpts)
+map("n", "<leader>ye", [[:lua require("yeet").setqflist({ open = true })<CR>]], defaultOpts)
 
 local harpoon = require("harpoon")
 harpoon:setup({})
@@ -92,12 +102,8 @@ vim.keymap.set("n", "<C-e>", function()
 	toggle_telescope(harpoon:list())
 end, { desc = "Open harpoon window" })
 
-
 function Harpoon_clear()
-  local list = harpoon:list()
-  for _ = 0, list._length do
-    list:remove_at(1)
-  end
+	harpoon:list():clear()
 end
 
 vim.g.UltiSnipsJumpForwardTrigger = "<c-j>"

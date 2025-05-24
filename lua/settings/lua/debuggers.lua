@@ -1,4 +1,4 @@
----@diagnostic disable: missing-fields
+-- -@diagnostic disable: missing-fields
 require("neodev").setup({
 	library = { plugins = { "nvim-dap-ui" }, types = true },
 })
@@ -18,8 +18,8 @@ local customLayouts = {
 				},
 				{
 					id = "watches",
-					size = 0.25,
-				},
+					size = 0.25
+				}
 			},
 			position = "left",
 			size = 40,
@@ -97,15 +97,25 @@ dap.adapters.coreclr = {
 
 dap.configurations.cpp = {
 	{
-		name = "Launch",
+		-- Change it to "cppdbg" if you have vscode-cpptools
 		type = "cppdbg",
 		request = "launch",
 		program = function()
-			dapui.setup({ layouts = customLayouts.full })
 			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+		end,
+		args = function()
+			local argv = {}
+			arg = vim.fn.input(string.format("argv: "))
+			for a in string.gmatch(arg, "%S+") do
+				table.insert(argv, a)
+			end
+			vim.cmd('echo ""')
+			return argv
 		end,
 		cwd = "${workspaceFolder}",
 		stopAtEntry = true,
+		MIMode = "gdb",
+		miDebuggerPath = "/usr/bin/gdb",
 		setupCommands = {
 			{
 				text = "-enable-pretty-printing",
@@ -120,7 +130,8 @@ dap.configurations.cpp = {
 		request = "launch",
 		program = function()
 			dapui.setup({ layouts = customLayouts.lite })
-			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			local message = vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			return message
 		end,
 		cwd = "${workspaceFolder}",
 		stopAtEntry = true,
@@ -133,16 +144,15 @@ dap.configurations.cpp = {
 		},
 	},
 	{
-		name = "Attach to gdbserver :1234",
+		name = "attach(lite)",
 		type = "cppdbg",
-		request = "launch",
-		MIMode = "gdb",
-		miDebuggerServerAddress = "localhost:1234",
-		miDebuggerPath = "/usr/bin/gdb",
-		cwd = "${workspaceFolder}",
+		request = "attach",
 		program = function()
-			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+			dapui.setup({ layouts = customLayouts.lite })
+			return "${command:pickProcess}"
 		end,
+		cwd = "${workspaceFolder}",
+		stopAtEntry = true,
 		setupCommands = {
 			{
 				text = "-enable-pretty-printing",

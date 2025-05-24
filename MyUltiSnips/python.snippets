@@ -34,8 +34,7 @@ def ${1:name}(${2:args})${3: -> ${4:None}}:
 endsnippet
 
 snippet init "__init__(self, ...)" w
-def __init__(self$1):
-	`!p
+def __init__(self$1) -> None: `!p
 snip.shift(1)
 for arg in parse_args(t[1]):
 	line = "self."+arg.name
@@ -52,16 +51,11 @@ snippet static "@staticmethod" w
 @staticmethod
 endsnippet
 
-snippet a "arg: type" w
-${1:name}:${2:type}
-endsnippet
-
-
-snippet from "from ... import ..." bwA
+snippet from "from ... import ..." bw
 from $1 import $0
 endsnippet
 
-snippet try "try: ... except: ..." iA
+snippet try "try: ... except: ..." wb
 try:
 	$1
 except ${2:Exception as e}:
@@ -92,5 +86,18 @@ endsnippet
 snippet imain "if __name__ == '__main__'" bw
 if __name__ == "__main__":
 	main()
+endsnippet
+
+snippet col "sqlalchemy column definition" wb
+${1:column}: Mapped[${2:type}]${3: = mapped_column($4)}$0
+endsnippet
+
+snippet rel "sqlalchemy relation definition" wb
+${1:column}: Mapped[${2:"`!p snip.rv = t[1].capitalize()`"}] = relationship($3)$0
+endsnippet
+
+snippet ifmain "if __name__ == '__main__'" wb
+if __name__ == "__main__":
+	${0:main()}
 endsnippet
 

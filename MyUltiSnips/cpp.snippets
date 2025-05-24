@@ -1,5 +1,4 @@
 global !p
-
 def toDefine(line, suffix="_HPP_"):
 	def repl(match):
 		return "_"+match.group(0)
@@ -9,49 +8,56 @@ def toDefine(line, suffix="_HPP_"):
 def toDefine_inplace(line):
 	return line.upper().replace(" ", "_")
 
+def parseClassFields(fieldsText):
+	fields = fieldsText.split(';');
+	fieldsData = []
+	for field in fields:
+		if field == "":
+			continue
+
+		words = field.split(' ')
+		fieldType, fieldName = ' '.join(words[:-1]), words[-1]
+		fieldsData.append((fieldType, fieldName));
+
+	return fieldsData
+
+def classFieldsToConstructor(fieldsText):
+	fieldsData = parseClassFields(fieldsText)
+	result = ""
+	for ftype, fname in fieldsData:
+		if result == "":
+			result += ftype + ' ' + fname.replace('_', '')
+			continue
+		result += ", " + ftype + ' ' + fname.replace('_', '')
+
+	return result
+
+def classFieldToAutoAssingInConstructor(fieldsText):
+	fieldsData = parseClassFields(fieldsText)
+	result = " : "
+	for ftype, fname in fieldsData:
+		if result == " : ":
+			result += f"{fname}({fname.replace('_', '')})"
+			continue
+		result += ", " + f"{fname}({fname.replace('_', '')})"
+	
+	return result;
+
 endglobal
 
 extends c
+priority 100
 
-snippet for "for(...;..;...) {}" w
-for(${1:size_t} ${2:i} = ${3:0}; $2 < $4; ${5:++$2}) {
-	$6
-}
-$0
-endsnippet
-
-snippet if "if(...)" w
-if(${1:condition}) {
-	$2
-}
-$0
-endsnippet
-
-snippet ife "if(...) else" w
-if(${1:condition}) {
-	$2
-} else {
-	$3
-}
-$0
-endsnippet
-
-snippet fora "for(auto:iterable)" w
+snippet fora "for(auto:iterable)" wb
 for(${1:auto&} ${2:elem} : ${3:iterable}) {
 	$4
 }
 $0
 endsnippet
 
-snippet while "while(cond) {...}" w
-while(${1:condition}) {
-	$2
-}
-$0
-endsnippet
-
-snippet fun "func definition" w
-${1:void} ${3:name}(${4:args}){$5}
+snippet foral "for(auto:iterable) on line" wb
+for(${1:auto&} ${2:elem} : ${3:iterable}) 
+	$4
 $0
 endsnippet
 
@@ -61,6 +67,7 @@ class ${1:ClassName} {
 private:
 	$2
 public:
+	$1(`!p snip.rv = classFieldsToConstructor(t[2])`)`!p snip.rv = classFieldToAutoAssingInConstructor(t[2])` {}
 	$0
 };
 endsnippet
@@ -71,26 +78,20 @@ snippet cla "full one file class definition" wb
 
 class $1 {
 private:
-	$0
+	$2
 public:
-
+	$1(`!p snip.rv = classFieldsToConstructor(t[2])`)`!p snip.rv = classFieldToAutoAssingInConstructor(t[2])` {}
+	$0
 };
 
 #endif // !`!p snip.rv = toDefine(t[1])`
 endsnippet
 
 
-snippet ifn "#ifndef #define #endif" wb
-#ifndef $1`!p t[1] = toDefine_inplace(t[1])`_HPP_
-#define $1_HPP_
-$0
-#endif // !$1_HPP_
-endsnippet
-
 snippet name "namespace ... {}" wb
 namespace $1 {
 $0
-} // !$1;
+} // namespace $1
 endsnippet
 
 snippet all "std::begin(...), std::end(...)" i
@@ -98,6 +99,51 @@ std::begin(${1:${VISUAL}}), std::end($1)$0
 endsnippet
 
 snippet cout "std::cout << ... << std::endl;" wb
-std::cout << $0${1:<< std::endl};
+std::cout << $0${1: << std::endl};
+endsnippet
+
+snippet forit "for iterator" wb
+for (
+	${1:auto} it = ${2:std::begin($3)};
+	it != ${4:std::end($3)};
+	++it
+) {
+$0
+}
+endsnippet
+
+snippet gtemplate "google tests main template" wb
+#include <gtest/gtest.h>
+
+int main(int argc, char **argw) {
+	testing::InitGoogleTest(&argc, argw);
+	return RUN_ALL_TESTS();
+}
+endsnippet
+
+snippet gtest "google test" wb
+TEST($1TestSuite, ${2:TestName}) {
+	$0
+}
+endsnippet
+
+snippet gftest "google fixture test" wb
+TEST_F(${1:TestFixtureClassName}, ${2:TestName}) {
+	$0
+}
+endsnippet
+
+snippet gfclass "google fixture class" wb
+#include <gtest/gtest.h>
+
+class $1 : public testing::Test {
+	public:
+	void SetUp() {
+			$0
+	}
+	void TearDown() {
+
+	}
+}
 endsnippet
 

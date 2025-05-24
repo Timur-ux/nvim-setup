@@ -46,8 +46,14 @@ local configs = {
 	js = {
 		require("formatter.filetypes.javascript").prettierd,
 	},
+	ts = {
+		require("formatter.filetypes.typescript").prettierd,
+	},
 	jsx = {
 		require("formatter.filetypes.javascriptreact").prettierd,
+	},
+	tsx = {
+		require("formatter.filetypes.typescriptreact").prettierd,
 	},
 	latex = {
 		require("formatter.filetypes.tex").latexindent,
@@ -76,6 +82,8 @@ require("formatter").setup({
 		tex = configs["latex"],
     json = configs["json"],
     javascriptreact = configs["jsx"],
+    typescriptreact = configs["tsx"],
+    typescript= configs["ts"],
     python = configs["python"],
 		["*"] = {
 			require("formatter.filetypes.any").remove_trailing_whitespace,

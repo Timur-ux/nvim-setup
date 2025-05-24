@@ -6,11 +6,12 @@ opt.showcmd = true
 opt.number = true
 opt.hlsearch = true
 opt.relativenumber = true
-opt.expandtab = true
+opt.expandtab = false
 opt.tabstop = 2
-opt.autoindent = true
 opt.softtabstop = 2
 opt.shiftwidth = 2
+opt.signcolumn = "yes"
+opt.autoindent = true
 
 vim.o.exrc = true
 
