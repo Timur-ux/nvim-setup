@@ -97,10 +97,11 @@ dap.adapters.coreclr = {
 
 dap.configurations.cpp = {
 	{
-		-- Change it to "cppdbg" if you have vscode-cpptools
+		name="launch with argv",
 		type = "cppdbg",
 		request = "launch",
 		program = function()
+			dapui.setup({ layouts = customLayouts.full })
 			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 		end,
 		args = function()

@@ -4,10 +4,14 @@ local defaultOpts = { noremap = true, silent = true }
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+map("i", "<C-ц>", "<C-w>", defaultOpts)
+
 map("v", "K", "k", { noremap = false })
 map("i", "jk", "<esc>", defaultOpts)
 map("i", "JK", "<esc>", defaultOpts)
 map("i", "<M-о><M-л>", "<esc>", defaultOpts)
+map("i", "<C-о>", "<C-j>", { noremap = false })
+map("i", "<C-л>", "<C-k>", { noremap = false })
 map("t", "jk", "<C-\\><C-n>", { noremap = false, silent = true })
 map("t", "JK", "<C-\\><C-n>", { noremap = false, silent = true })
 
@@ -35,11 +39,11 @@ map("n", "<c-u>", "<c-u>zz", defaultOpts)
 map("n", "<c-a>", [[<cmd>lua require('telescope.builtin').find_files()<cr>]], defaultOpts)
 map("n", "<c-p>", [[<cmd>lua require('telescope.builtin').buffers()<cr>]], defaultOpts)
 
-map("n", "<leader>a", [[:lua require('harpoon'):list():add()<CR>]], defaultOpts)
-map("n", "<leader>d", [[:lua require('harpoon'):list():remove()<CR>]], defaultOpts)
+-- map("n", "<leader>a", [[:lua require('harpoon'):list():add()<CR>]], defaultOpts)
+-- map("n", "<leader>d", [[:lua require('harpoon'):list():remove()<CR>]], defaultOpts)
 
-map("n", "<C-t>", [[:lua require('harpoon'):list():prev()<CR>]], defaultOpts)
-map("n", "<C-n>", [[:lua require('harpoon'):list():next()<CR>]], defaultOpts)
+-- map("n", "<C-t>", [[:lua require('harpoon'):list():prev()<CR>]], defaultOpts)
+-- map("n", "<C-n>", [[:lua require('harpoon'):list():next()<CR>]], defaultOpts)
 
 map("n", "<leader>f", ":Format<CR>", defaultOpts)
 map("n", "<leader>F", ":FormatWrite<CR>", defaultOpts)
@@ -77,34 +81,34 @@ map("n", "<leader>yt", [[:lua require("yeet").select_target()<CR>]], defaultOpts
 map("n", "<leader>yo", [[:lua require("yeet").toggle_post_write()<CR>]], defaultOpts)
 map("n", "<leader>ye", [[:lua require("yeet").setqflist({ open = true })<CR>]], defaultOpts)
 
-local harpoon = require("harpoon")
-harpoon:setup({})
-local conf = require("telescope.config").values
-local function toggle_telescope(harpoon_files)
-	local file_paths = {}
-	for _, item in ipairs(harpoon_files.items) do
-		table.insert(file_paths, item.value)
-	end
-
-	require("telescope.pickers")
-		.new({}, {
-			prompt_title = "Harpoon",
-			finder = require("telescope.finders").new_table({
-				results = file_paths,
-			}),
-			previewer = conf.file_previewer({}),
-			sorter = conf.generic_sorter({}),
-		})
-		:find()
-end
-
-vim.keymap.set("n", "<C-e>", function()
-	toggle_telescope(harpoon:list())
-end, { desc = "Open harpoon window" })
-
-function Harpoon_clear()
-	harpoon:list():clear()
-end
+-- local harpoon = require("harpoon")
+-- harpoon:setup({})
+-- local conf = require("telescope.config").values
+-- local function toggle_telescope(harpoon_files)
+-- 	local file_paths = {}
+-- 	for _, item in ipairs(harpoon_files.items) do
+-- 		table.insert(file_paths, item.value)
+-- 	end
+--
+-- 	require("telescope.pickers")
+-- 		.new({}, {
+-- 			prompt_title = "Harpoon",
+-- 			finder = require("telescope.finders").new_table({
+-- 				results = file_paths,
+-- 			}),
+-- 			previewer = conf.file_previewer({}),
+-- 			sorter = conf.generic_sorter({}),
+-- 		})
+-- 		:find()
+-- end
+--
+-- vim.keymap.set("n", "<C-e>", function()
+-- 	toggle_telescope(harpoon:list())
+-- end, { desc = "Open harpoon window" })
+--
+-- function Harpoon_clear()
+-- 	harpoon:list():clear()
+-- end
 
 vim.g.UltiSnipsJumpForwardTrigger = "<c-j>"
 vim.g.UltiSnipsJumpBackwardTrigger = "<c-k>"

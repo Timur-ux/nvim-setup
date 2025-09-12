@@ -70,7 +70,7 @@ endglobal
 
 priority 10
 snippet template "base template for document" bw
-\documentclass[pdf, unicode, 12pt, a4paper,oneside,fleqn]{article}
+\documentclass[pdf, unicode, 12pt, a4paper,oneside,fleqn]{extarticle}
 
 \usepackage[utf8]{inputenc}
 \usepackage[T2B]{fontenc}
@@ -291,7 +291,6 @@ snippet 'ben(\d+)' "\begin{enumerate}...\end{enumerate}" rwb
 \end{enumerate}
 endsnippet
 
-context "math()"
 post_jump "expand_table_placeholders(snip, ' & ', r'\\\\\\\\')"
 snippet 'phds[_]?(\d+),(\d+)' "creates table of placeholders" rwb
 `!p snip.rv = f"{match.group(1)},{match.group(2)}"`$0
@@ -587,6 +586,12 @@ endsnippet
 context "math()"
 snippet cdot "\cdot" iA
 \cdot
+endsnippet
+
+snippet mat "pmatrix" i
+\begin{pmatrix}
+$0
+\end{pmatrix}
 endsnippet
 
 

@@ -11,6 +11,11 @@ def toDefine_inplace(line):
 endglobal
 
 priority 10
+snippet Debug "macros debug block" wb
+#ifdef DEBUG
+$1
+#endif$0
+endsnippet
 
 snippet while "while(cond) {...}" w
 while(${1:${VISUAL}}) {

@@ -41,7 +41,15 @@ local configs = {
 		require("formatter.filetypes.json").prettierd,
 	},
 	python = {
+		function ()
+			return {
+				exe = "autoflake",
+				args = { "--remove-all-unused-imports", "--remove-unused-variables" ,"-" },
+				stdin = true,
+			}
+		end,
 		require("formatter.filetypes.python").autopep8,
+		require("formatter.filetypes.python").docformat,
 	},
 	js = {
 		require("formatter.filetypes.javascript").prettierd,
@@ -76,15 +84,15 @@ require("formatter").setup({
 
 	filetype = {
 		javascript = configs["js"],
-    lua = configs["lua"],
+		lua = configs["lua"],
 		c = configs["cpp"],
 		cpp = configs["cpp"],
 		tex = configs["latex"],
-    json = configs["json"],
-    javascriptreact = configs["jsx"],
-    typescriptreact = configs["tsx"],
-    typescript= configs["ts"],
-    python = configs["python"],
+		json = configs["json"],
+		javascriptreact = configs["jsx"],
+		typescriptreact = configs["tsx"],
+		typescript = configs["ts"],
+		python = configs["python"],
 		["*"] = {
 			require("formatter.filetypes.any").remove_trailing_whitespace,
 		},

@@ -1,51 +1,76 @@
 return {
 	{
-			"samharju/yeet.nvim",
-			dependencies = {
-					"stevearc/dressing.nvim", -- optional, provides sane UX
+		"amitds1997/remote-nvim.nvim",
+		version = "*", -- Pin to GitHub releases
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- For standard functions
+			"MunifTanjim/nui.nvim", -- To build the plugin UI
+			"nvim-telescope/telescope.nvim", -- For picking b/w different remote methods
+		},
+		config = true,
+	},
+	{
+		"samharju/yeet.nvim",
+		dependencies = {
+			"stevearc/dressing.nvim", -- optional, provides sane UX
+		},
+		version = "*", -- use the latest release, remove for master
+		cmd = "Yeet",
+		opts = {},
+		keys = {
+			{
+				-- Pop command cache open.
+				"<leader>yl",
+				function()
+					require("yeet").list_cmd()
+				end,
 			},
-			version = "*", -- use the latest release, remove for master
-			cmd = "Yeet",
-			opts = {},
-			keys = {
-        {
-            -- Pop command cache open.
-            "<leader>yl", function() require("yeet").list_cmd() end,
-        },
-        {
-            -- Douple tap \ to yeet at something.
-            "\\\\",
-            function() require("yeet").execute() end,
-        },
-        {
-            -- Run command without clearing terminal, interrupt previous command.
-            "<leader>\\",
-            function() require("yeet").execute(nil, { clear_before_yeet = false, interrupt_before_yeet = true, }) end,
-        },
-        {
-            -- Yeet visual selection. Useful sending code to a repl or running multiple shell commands.
-            -- Using yeet_and_run = true and clear_before_yeet = false heavily suggested, if not
-            -- already set in setup.
-            "\\\\",
-            function() require("yeet").execute_selection({ yeet_and_run = true, clear_before_yeet = false, }) end,
-            mode = { "v" },
-        },
-        {
-            -- Open target selection.
-            "<leader>yt",
-            function() require("yeet").select_target() end,
-        },
-        {
-            -- Toggle autocommand for yeeting after write.
-            "<leader>yo",
-            function() require("yeet").toggle_post_write() end,
-        },
-        {
-            -- Parse last command output with current vim.o.errorformat and send them to quickfix.
-            "<leader>ye",
-            function() require("yeet").setqflist({ open = true }) end,
-        },
-    },
+			{
+				-- Douple tap \ to yeet at something.
+				"\\\\",
+				function()
+					require("yeet").execute()
+				end,
+			},
+			{
+				-- Run command without clearing terminal, interrupt previous command.
+				"<leader>\\",
+				function()
+					require("yeet").execute(nil, { clear_before_yeet = false, interrupt_before_yeet = true })
+				end,
+			},
+			{
+				-- Yeet visual selection. Useful sending code to a repl or running multiple shell commands.
+				-- Using yeet_and_run = true and clear_before_yeet = false heavily suggested, if not
+				-- already set in setup.
+				"\\\\",
+				function()
+					require("yeet").execute_selection({ yeet_and_run = true, clear_before_yeet = false })
+				end,
+				mode = { "v" },
+			},
+			{
+				-- Open target selection.
+				"<leader>yt",
+				function()
+					require("yeet").select_target()
+				end,
+			},
+			{
+				-- Toggle autocommand for yeeting after write.
+				"<leader>yo",
+				function()
+					require("yeet").toggle_post_write()
+				end,
+			},
+			{
+				-- Parse last command output with current vim.o.errorformat and send them to quickfix.
+				"<leader>ye",
+				function()
+					require("yeet").setqflist({ open = true })
+				end,
+			},
+		},
 	},
 	{
 		"vim-pandoc/vim-pandoc",

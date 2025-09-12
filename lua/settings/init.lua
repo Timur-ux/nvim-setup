@@ -40,3 +40,7 @@ local settingsToLoad = {
 for _, setting in ipairs(settingsToLoad) do
 	require(prefix .. "." .. setting)
 end
+
+vim.api.nvim_create_autocmd("BufWritePost", {
+	command = [[ctags -R . &]]
+})

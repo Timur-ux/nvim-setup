@@ -1,0 +1,34 @@
+snippet Kn "Kn" wb
+MT K${1:2};
+	BEGIN
+	ALPHABET: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0;
+	MT L; LIB;
+	MT R; LIB;
+	L**$1; r;
+	DO
+		0 ? a(_); R**`!p snip.rv = int(t[1]) + 1` ; a(0); L**`!p snip.rv = int(t[1]) + 1`; a(0); r
+		1 ? a(_); R**`!p snip.rv = int(t[1]) + 1` ; a(1); L**`!p snip.rv = int(t[1]) + 1`; a(1); r
+		2 ? a(_); R**`!p snip.rv = int(t[1]) + 1` ; a(2); L**`!p snip.rv = int(t[1]) + 1`; a(2); r
+		3 ? a(_); R**`!p snip.rv = int(t[1]) + 1` ; a(3); L**`!p snip.rv = int(t[1]) + 1`; a(3); r
+		4 ? a(_); R**`!p snip.rv = int(t[1]) + 1` ; a(4); L**`!p snip.rv = int(t[1]) + 1`; a(4); r
+		5 ? a(_); R**`!p snip.rv = int(t[1]) + 1` ; a(5); L**`!p snip.rv = int(t[1]) + 1`; a(5); r
+		6 ? a(_); R**`!p snip.rv = int(t[1]) + 1` ; a(6); L**`!p snip.rv = int(t[1]) + 1`; a(6); r
+		7 ? a(_); R**`!p snip.rv = int(t[1]) + 1` ; a(7); L**`!p snip.rv = int(t[1]) + 1`; a(7); r
+		8 ? a(_); R**`!p snip.rv = int(t[1]) + 1` ; a(8); L**`!p snip.rv = int(t[1]) + 1`; a(8); r
+		9 ? a(_); R**`!p snip.rv = int(t[1]) + 1` ; a(9); L**`!p snip.rv = int(t[1]) + 1`; a(9); r
+	OD;
+	R**$1;
+END K$1
+endsnippet
+
+snippet mt "MT definition" wb
+MT $1`!p t[1] = t[1].upper()`;
+	BEGIN
+	ALPHABET: `!p t[2] = ','.join(sorted(filter(lambda x: x!=',', t[2])))`$2;
+	$3
+END $1
+endsnippet
+
+snippet lib "lib include" wb
+MT $1; LIB;
+endsnippet

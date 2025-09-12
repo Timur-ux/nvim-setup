@@ -1,7 +1,8 @@
-local masonPackages = "stylua lua-language-server clangd clang-format cpptools typescript-language-server prettier prettierd pyright autopep8 latexindent texlab cmake-language-server glsl_analyzer bash-language-server docker-compose-language-service dockerfile-language-server"
-local masonWarning = "Make sure that npm, python3 virtualenv installed"
+local masonPackages = "stylua lua-language-server clangd clang-format cpptools typescript-language-server prettier prettierd pyright autopep8 latexindent texlab cmake-language-server glsl_analyzer bash-language-server dockerfile-language-server autoflake dockformatter"
+local masonWarning = "Make sure npm, python3 virtualenv installed"
 
 function MasonInstallDefaults()
+	print(masonWarning)
   vim.cmd("MasonInstall " .. masonPackages)
 end
 
