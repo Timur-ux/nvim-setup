@@ -6,6 +6,7 @@ function UltiSnips_IsExpandable()
   return result == 1
 end
 
+local compare = cmp.config.compare
 cmp.setup({
 	snippet = {
 		expand = function(args)
@@ -14,11 +15,20 @@ cmp.setup({
 	},
 
 	sources = {
-		{ name = "ultisnips" },
-		{ name = "path" },
-		{ name = "nvim_lsp", keyword_length = 1 },
-		{ name = "buffer", keyword_length = 4 },
-		{ name = "luasnip", keyword_length = 3 },
+		{ name = "jupynium", priority = 1000},
+		{ name = "ultisnips", priority = 100},
+		{ name = "path", priority = 90},
+		{ name = "nvim_lsp", keyword_length = 1, priority=90 },
+		{ name = "buffer", keyword_length = 4, priority=90 },
+		{ name = "luasnip", keyword_length = 3, priority=90 },
+	},
+	sorting = {
+		priority_weight = 1.0,
+		comparators = {
+			compare.score,
+			compare.recently_used,
+			compare.locality
+		}
 	},
 	window = {
 		documentation = cmp.config.window.bordered(),

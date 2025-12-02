@@ -17,7 +17,7 @@ vim.o.exrc = true
 
 opt.cursorline = true
 opt.termguicolors = true
-opt.clipboard = "unnamedplus"
+-- opt.clipboard = "unnamedplus"
 
 opt.conceallevel = 2
 vim.g.vim_markdown_conceal = 1
@@ -42,5 +42,4 @@ for _, setting in ipairs(settingsToLoad) do
 end
 
 vim.api.nvim_create_autocmd("BufWritePost", {
-	command = [[ctags -R . &]]
-})
+	command = "silent! ctags -R . &" })

@@ -7,6 +7,7 @@ local cfg = {
 	capabilities = lspCapabilities,
 }
 
+vim.lsp.config("*", cfg)
 vim.lsp.config("dockerls", {
 	capabilities = lspCapabilities,
 	filetypes = { "dockerfile", "Dockerfile" },
@@ -21,41 +22,40 @@ vim.lsp.config("dockerls", {
 	},
 })
 
--- vim.lsp.config("*", cfg)
--- vim.lsp.enable({
--- 	"clangd",
--- 	"pyright",
--- 	"lua_ls",
--- 	"ts_ls",
--- 	"glsl_analyzer",
--- 	"cmake",
--- 	"texlab",
--- 	"bashls",
--- 	"docker_compose_language_service",
--- 	"dockerls",
--- })
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
-lsp.clangd.setup(cfg)
-lsp.pyright.setup(cfg)
-lsp.lua_ls.setup(cfg)
-lsp.ts_ls.setup(cfg)
-lsp.glsl_analyzer.setup(cfg)
-lsp.cmake.setup(cfg)
-lsp.texlab.setup(cfg)
-lsp.bashls.setup(cfg)
-lsp.dockerls.setup({
-	capabilities = lspCapabilities,
-	filetypes = { "dockerfile", "Dockerfile" },
-	settings = {
-		docker = {
-			languageserver = {
-				formatter = {
-					ignoreMultilineInstructions = true,
-				},
-			},
-		},
-	},
+vim.lsp.enable({
+	"clangd",
+	"pyright",
+	"lua_ls",
+	"ts_ls",
+	"glsl_analyzer",
+	"cmake",
+	"texlab",
+	"bashls",
+	"docker_compose_language_service",
+	"dockerls",
 })
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+-- lsp.clangd.setup(cfg)
+-- lsp.pyright.setup(cfg)
+-- lsp.lua_ls.setup(cfg)
+-- lsp.ts_ls.setup(cfg)
+-- lsp.glsl_analyzer.setup(cfg)
+-- lsp.cmake.setup(cfg)
+-- lsp.texlab.setup(cfg)
+-- lsp.bashls.setup(cfg)
+-- lsp.dockerls.setup({
+-- 	capabilities = lspCapabilities,
+-- 	filetypes = { "dockerfile", "Dockerfile" },
+-- 	settings = {
+-- 		docker = {
+-- 			languageserver = {
+-- 				formatter = {
+-- 					ignoreMultilineInstructions = true,
+-- 				},
+-- 			},
+-- 		},
+-- 	},
+-- })
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP actions",

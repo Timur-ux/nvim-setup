@@ -402,8 +402,8 @@ snippet @p "\pi" iA
 endsnippet
 
 context "math()"
-snippet xi "\xi" iA
-\xi 
+snippet '([^e])xi' "\xi" riA
+`!p snip.rv = match.group(1)`\xi 
 endsnippet
 
 context "math()"
@@ -534,8 +534,8 @@ endsnippet
 
 
 context "math()"
-snippet ex "exists symbol" iA
-\exists
+snippet '([^\\])ex' "exists symbol" riA
+`!p snip.rv = match.group(1)`\exists
 endsnippet
 
 context "math()"
@@ -586,6 +586,10 @@ endsnippet
 context "math()"
 snippet cdot "\cdot" iA
 \cdot
+endsnippet
+context "math()"
+snippet par "\partial" iA
+\partial 
 endsnippet
 
 snippet mat "pmatrix" i

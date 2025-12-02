@@ -101,3 +101,8 @@ if __name__ == "__main__":
 	${0:main()}
 endsnippet
 
+snippet file "open file context" wb
+with open(${1:path}, ${2:"w"}) as ${2:file}:
+	$0
+endsnippet
+

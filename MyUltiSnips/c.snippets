@@ -49,6 +49,7 @@ endsnippet
 snippet ifn "#ifndef #define #endif" wb
 #ifndef $1`!p t[1] = toDefine_inplace(t[1])`_HPP_
 #define $1_HPP_
+#pragma once
 $0
 #endif // !$1_HPP_
 endsnippet
@@ -74,9 +75,8 @@ $0
 endsnippet
 
 snippet main "int main(...) {}" wb
-int main(int argc, char * argw[]) {
+int main(int argc, const char * argw[]) {
 	$0
-
 	return 0;
 }
 endsnippet

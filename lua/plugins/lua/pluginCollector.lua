@@ -17,7 +17,7 @@ local pluginSections = {
   'debuggers',
   'linters',
   'formatters',
-  'tools'
+  'tools',
 }
 
 for i, section in ipairs(pluginSections) do

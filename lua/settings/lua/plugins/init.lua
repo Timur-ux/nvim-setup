@@ -8,6 +8,9 @@ local plugins = {
   "obsidian",
   "autopairs",
   "vimtex",
+	"plantuml",
+	"jupynium",
+	"notify",
 }
 
 local prefix = "settings.lua.plugins.lua."

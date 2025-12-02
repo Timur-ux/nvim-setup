@@ -1,6 +1,8 @@
 snippet cpp "cpp base template" wb
 cmake_minimum_required(VERSION 3.10)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 project(
 	${1:name}
 	LANGUAGES CXX
@@ -36,5 +38,26 @@ target_link_libraries(tests GTest::gtest_main src_lib)
 
 include(GoogleTest)
 gtest_discover_tests(tests)
+endsnippet
+
+snippet conan "cpp conan template for CMake" wb
+cmake_minimum_required(VERSION 3.15)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_TOOLCHAIN_FILE "./build/conan_toolchain.cmake")
+
+project(
+	ImageGlitcher
+	LANGUAGES CXX
+)
+
+file(GLOB_RECURSE SRC_FILES LIST_DIRECTORIES FALSE ./src/*.cpp)
+
+add_library(src_lib SHARED ${SRC_FILES})
+
+include_directories("include")
+
+add_executable(main main.cpp)
+target_link_libraries(main src_lib)
 endsnippet
 

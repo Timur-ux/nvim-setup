@@ -1,0 +1,32 @@
+snippet template "base template" wb
+@startuml
+$0
+@enduml
+endsnippet
+
+snippet C4 "C4 include file" wb
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+endsnippet
+
+snippet Container "C4 container" wb
+Container(${1:alias}, ${2:label}, ${3:description})$0
+endsnippet
+
+snippet System "C4 system" wb
+System(${1:alias}, ${2:label}, ${3:description})$0
+endsnippet
+
+snippet Rel "C4 relation" wb
+Rel(${1:aliasFrom}, ${2:aliasTo}, ${3:label})$0
+endsnippet
+
+snippet Bound "System Boundary" wb
+System_Boundary(${1:alias}, ${2:label}) {
+	${3:Components (1 per line)}
+}$0
+endsnippet
+
+
+
+

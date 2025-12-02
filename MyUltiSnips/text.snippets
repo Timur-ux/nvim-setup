@@ -1,0 +1,9 @@
+snippet conanInit "conan file init snip" wb
+[requires]
+${1:package}/${2:version}
+
+[generators]
+CMakeDeps
+CMakeToolchain
+endsnippet
+
