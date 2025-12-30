@@ -49,15 +49,15 @@ extends c
 priority 100
 
 snippet fora "for(pre-init;auto:iterable)" wb
-for(${1:$2;}$3 : $4) { 
-	$5
+for($1 : $2) { 
+	$3
 }
 $0
 endsnippet
 
 snippet foral "for(pre-init;auto:iterable) on line" wb
-for(${1:$2;}$3 : $4) 
-	$5
+for($1 : $2) 
+	$3
 $0
 endsnippet
 
@@ -94,8 +94,8 @@ $0
 } // namespace $1
 endsnippet
 
-snippet all "std::begin(...), std::end(...)" i
-std::begin(${1:${VISUAL}}), std::end($1)$0
+snippet '([^a-zA-z])all' "std::begin(...), std::end(...)" ri
+`!p snip.rv = match.group(1)`std::begin(${1:${VISUAL}}), std::end($1)$0
 endsnippet
 
 snippet cout "std::cout << ... << \n;" wb
@@ -138,12 +138,29 @@ snippet gfclass "google fixture class" wb
 
 class $1 : public testing::Test {
 	public:
-	void SetUp() {
-			$0
-	}
-	void TearDown() {
+	void SetUp() {}
+	void TearDown() {}
+};
+endsnippet
 
-	}
+snippet gpclass "google parametrized class" wb
+#include <gtest/gtest.h>
+
+class $1 : public testing::TestWithParam<$2> {
+	public:
+	void SetUp() {}
+	void TearDown() {}
+};
+
+INSTANTIATE_TEST_SUITE_P(${3:GroupName}, $1, ${4:testing::Values($5)});
+TEST_P($1, ) {
+	$2 param = GetParam();
+}
+endsnippet
+
+snippet gptest "google parametrized test" wb
+TEST_P(${1:TestFixtureClassName}, ${2:TestName}) {
+	$0
 }
 endsnippet
 
@@ -153,4 +170,92 @@ public:
 	virtual ${4:void} ${2:method} ($3) = 0;
 };
 endsnippet
+
+snippet tem "template <typename ...>" wb
+template <${1:typename} ${2:T}$3>$0
+endsnippet
+
+snippet cnstr "default constructors" wb
+$1()${2: = default};
+${3:`!p snip.rv = \
+t[1] + "(const " + t[1]+" &other);\n" +\
+t[1]+"("+t[1] + " &&other) noexcept;\n" + \
+t[1] + "& operator=(const "+t[1]+ "&other);\n" + \
+t[1]+"& operator=("+t[1]+" &&other) noexcept;"`}
+$0
+endsnippet
+
+snippet method "method outline" wb
+${1:tem$2}
+${3:retVal} ${4:className}::${5:method}($6) {
+$0
+}
+endsnippet
+
+snippet sample "sample" wb
+some $1
+none $1
+$0
+endsnippet
+
+
+snippet iterDef "iterator definition" wb
+template <typename ${1:T}>
+class ${2:Iterator} {
+public:
+	using iterator_category = ${3:std::bidirectional_iterator_tag};
+	using difference_type = ${4:std::ptrdiff_t};
+	using value_type = `!p snip.rv = t[1]`;
+	using pointer = `!p snip.rv = t[1]` *;
+	using reference = `!p snip.rv = t[1]` &;
+
+protected:
+	${5:$1*} ptr_;
+
+public:
+	$2($5 ptr) : ptr_(ptr) {}
+
+	reference operator*() { return *ptr_; }
+	pointer operator->() { return ptr_; }
+
+	bool operator==(const $2<$1> &other) const {
+		return ptr_ == other.ptr_;
+	}
+
+	// prefix
+	$2<$1> &operator++() {
+		// TODO
+	}
+
+	// postfix
+	$2<$1> operator++(int) {
+		$2<$1> result(ptr_);
+		++(*this);
+		return result;
+	}
+
+	$2<$1> &operator--() {
+		// TODO
+	}
+
+	$2<$1> operator--(int) {
+		$2<$1> result(ptr_);
+		--(*this);
+		return result;
+	}
+
+	$2<$1> operator+(difference_type diff) const {
+		// TODO
+	}
+
+	$2<$1> operator-(difference_type diff) const {
+		// TODO
+	}
+
+	difference_type operator-(const $2<$1> & other) const {
+		// TODO
+	}
+};
+endsnippet
+
 

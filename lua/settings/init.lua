@@ -28,6 +28,9 @@ vim.g.UltiSnipsSnippetDirectories={"UltiSnips", "MyUltiSnips"}
 vim.g.tex_conceal = "admsg"
 vim.g.vim_markdown_math = 1
 
+opt.spelllang="en,ru"
+opt.spell = false
+
 local prefix = "settings.lua"
 local settingsToLoad = {
 	"debuggers",

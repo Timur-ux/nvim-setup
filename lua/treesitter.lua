@@ -1,6 +1,6 @@
-require('nvim-treesitter.configs').setup( {
+require('nvim-treesitter').setup( {
   -- Парсеры, которые мы собираемся использовать
-  ensure_installed = { "c", "python", "cpp", "lua", "markdown", "markdown_inline"},
+  ensure_installed = { "c", "python", "cpp", "lua", "markdown", "markdown_inline", "yaml", "json", "dockerfile"},
 
   sync_install = true,
 

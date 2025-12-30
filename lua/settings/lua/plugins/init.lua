@@ -11,6 +11,7 @@ local plugins = {
 	"plantuml",
 	"jupynium",
 	"notify",
+	"harpoon"
 }
 
 local prefix = "settings.lua.plugins.lua."

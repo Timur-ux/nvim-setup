@@ -11,10 +11,9 @@ def toDefine_inplace(line):
 endglobal
 
 priority 10
-snippet Debug "macros debug block" wb
-#ifdef DEBUG
-$1
-#endif$0
+
+snippet printf
+printf("${1:%s}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$2${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
 endsnippet
 
 snippet while "while(cond) {...}" w
