@@ -1,4 +1,10 @@
-require("mason").setup()
+require("mason").setup({
+	registries = {
+		"github:mason-org/mason-registry",
+		"github:Timur-ux/tias-registry"
+	}
+})
+
 require("mason-lspconfig").setup()
 
 local lspCapabilities = require("cmp_nvim_lsp").default_capabilities()
@@ -28,7 +34,7 @@ vim.lsp.enable({
 	"lua_ls",
 	"ts_ls",
 	"glsl_analyzer",
-	"cmake",
+	"neocmake",
 	"texlab",
 	"bashls",
 	"docker_compose_language_service",

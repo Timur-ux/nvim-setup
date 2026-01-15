@@ -8,7 +8,7 @@ project(
 	LANGUAGES CXX
 )
 
-set(CMAKE_CXX_STANDART 20)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB_RECURSE SRC_FILES LIST_DIRECTORIES FALSE ./src/*.cpp)
@@ -59,5 +59,50 @@ include_directories("include")
 
 add_executable(main main.cpp)
 target_link_libraries(main src_lib)
+endsnippet
+
+snippet addlib "add_library" wb
+add_library(${1:name} ${2:STATIC} ${3:sources...})$0
+endsnippet
+
+snippet addexec "add_executable" wb
+add_executable(${1:main} ${2:./main.cpp})
+endsnippet
+
+snippet addsub "add_subdirectory" wb
+add_subdirectory($1)$0
+endsnippet
+
+
+snippet adddummy "add dummy target without sources" wb
+add_custom_target($1)
+endsnippet
+
+snippet adddep "add_dependencies" wb
+add_dependencies(${1:target} ${2:dependencies...})
+endsnippet
+
+snippet trgll "target_link_libraries" wb
+target_link_libraries(${1:target} ${2:PUBLIC} ${3:libname} $4)$0
+endsnippet
+
+snippet trgld "target_link_directories" wb
+target_link_directories(${1:target} ${2:PUBLIC} ${3:dirname} $4)$0
+endsnippet
+
+snippet trgid "target_include_directories" wb
+target_include_directories(${1:target} ${2:PUBLIC} ${3:dirname} $4)$0
+endsnippet
+
+snippet trgcd "target_compile_definitions" wb
+target_compile_definitions(${1:target} ${2:PUBLIC} ${3:difname} $4)$0
+endsnippet
+
+snippet settgrprop "set_target_properties" wb
+set_target_properties(${1:target} PROPERTIES ${2:prop1} ${3:value1}$4)
+endsnippet
+
+snippet getprop "get_property" wb
+get_property(${1:prop variable} TARGET $2 PROPERTY $3)
 endsnippet
 

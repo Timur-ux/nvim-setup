@@ -1,0 +1,52 @@
+snippet crtable "create table" wb
+CREATE TABLE ${1:table_name} (
+	${2:id SERIAL PRIMARY KEY,}
+	$0
+);
+endsnippet
+
+snippet crenum "create enum" wb
+CREATE TYPE ${1:ENUM_TYPE_NAME} AS ENUM ('$2');`!p t[1] = t[1].upper().replace(" ", "_")`
+endsnippet
+
+snippet ref "add reference spec" w
+REFERENCES ${1:table}(${2:id}) ON DELETE ${3:CASCADE},
+endsnippet
+
+snippet not "not NULL" w
+NOT NULL
+endsnippet
+
+snippet time "timestamp" w
+TIMESTAMP ${1:DEFAULT ${2:NOW()}}$0,
+endsnippet
+
+snippet id "id table column spec" wb
+id SERIAL PRIMARY KEY,
+endsnippet
+
+snippet int "INTEGER" wA
+INTEGER
+endsnippet
+
+snippet text "TEXT" wA
+TEXT
+endsnippet
+
+snippet var "varchar(n)" wA
+VARCHAR($1)$0
+endsnippet
+
+snippet def "default" w
+DEFAULT 
+endsnippet
+
+snippet true "TRUE" wA
+TRUE
+endsnippet
+
+snippet false "FALSE" wA
+FALSE
+endsnippet
+
+
