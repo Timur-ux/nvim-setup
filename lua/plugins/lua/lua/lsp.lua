@@ -1,4 +1,4 @@
-local masonPackages = "stylua lua-language-server clangd clang-format cpptools typescript-language-server prettier prettierd pyright autopep8 latexindent texlab neocmakelsp glsl_analyzer bash-language-server dockerfile-language-server autoflake dockformatter"
+local masonPackages = "stylua lua-language-server clangd clang-format cpptools typescript-language-server prettier prettierd pyright autopep8 latexindent texlab neocmakelsp glsl_analyzer bash-language-server dockerfile-language-server autoflake docformatter"
 local masonWarning = "Make sure npm, python3 virtualenv installed"
 
 function MasonInstallDefaults()
