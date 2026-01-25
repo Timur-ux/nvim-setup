@@ -1,11 +1,33 @@
 require("mason").setup({
 	registries = {
 		"github:mason-org/mason-registry",
-		"github:Timur-ux/tias-registry"
-	}
+		"github:Timur-ux/tias-registry",
+	},
 })
 
 require("mason-lspconfig").setup()
+
+require("mason-tool-installer").setup({
+	ensure_installed = {
+		"stylua",
+		"lua-language-server",
+		"clangd",
+		"clang-format",
+		"cpptools",
+		"typescript-language-server",
+		"prettier",
+		"prettierd",
+		"pyright",
+		"autopep8",
+		"latexindent",
+		"texlab",
+		"neocmakelsp",
+		"glsl_analyzer",
+		"bash-language-server",
+		"dockerfile-language-server",
+		"autoflake",
+	},
+})
 
 local lspCapabilities = require("cmp_nvim_lsp").default_capabilities()
 local lsp = require("lspconfig")
@@ -182,4 +204,3 @@ prettier.setup({
 		timeout = 5000,
 	},
 })
-
