@@ -21,6 +21,10 @@ snippet time "timestamp" w
 TIMESTAMP ${1:DEFAULT ${2:NOW()}}$0,
 endsnippet
 
+snippet timetz "TIMESTAMPTZ" w
+TIMESTAMPTZ ${1:DEFAULT ${2:NOW()}}$0,
+endsnippet
+
 snippet id "id table column spec" wb
 id SERIAL PRIMARY KEY,
 endsnippet
@@ -38,7 +42,7 @@ VARCHAR($1)$0
 endsnippet
 
 snippet def "default" w
-DEFAULT 
+DEFAULT
 endsnippet
 
 snippet true "TRUE" wA
@@ -49,4 +53,39 @@ snippet false "FALSE" wA
 FALSE
 endsnippet
 
+snippet primary "PRIMARY KEY" wA
+PRIMARY KEY
+endsnippet
+
+snippet alter "ALTER" wA
+ALTER ${1:TABLE}
+endsnippet
+
+snippet select "SELECT" wA
+SELECT
+endsnippet
+
+snippet from "FROM" wA
+FROM
+endsnippet
+
+snippet where "WHERE" wA
+WHERE
+endsnippet
+
+snippet exists "EXISTS" wA
+EXISTS
+endsnippet
+
+snippet insert "INSERT" wA
+INSERT INTO
+endsnippet
+
+snippet values "VALUES" wA
+VALUES
+endsnippet
+
+snippet on "ON" wA
+ON
+endsnippet
 

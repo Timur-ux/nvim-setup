@@ -1,7 +1,7 @@
 FROM ubuntu:24.04
 
 RUN apt update &&\
-    apt install -y wget git python3-neovim zip python3-pip python3-venv npm &&\
+    apt install -y sudo wget git python3-neovim zip python3-pip python3-venv npm &&\
 		apt clean all
 
 
@@ -24,5 +24,8 @@ RUN mkdir -p /home/ubuntu/.config && \
 RUN /home/ubuntu/nvim-linux-x86_64/bin/nvim --headless -c "MasonToolsInstallSync" -c qall
 
 VOLUME [ "/app" ]
+
+# restore root user for be able to install additional packages in applications
+USER root
 
 ENTRYPOINT [ "/home/ubuntu/nvim-linux-x86_64/bin/nvim", "/app" ]
