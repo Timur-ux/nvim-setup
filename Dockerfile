@@ -17,8 +17,8 @@ RUN cd /home/ubuntu/ && \
 	  tar xzvf nvim-linux-x86_64.tar.gz
 
 # setup my config
-RUN mkdir -p /home/ubuntu/.config && \
-		git clone https://github.com/Timur-ux/nvim-setup.git /home/ubuntu/.config/nvim
+RUN mkdir -p /home/ubuntu/.config
+RUN git clone https://github.com/Timur-ux/nvim-setup.git /home/ubuntu/.config/nvim
 
 # setup packages, lsps, formatters, etc
 RUN /home/ubuntu/nvim-linux-x86_64/bin/nvim --headless -c "MasonToolsInstallSync" -c qall

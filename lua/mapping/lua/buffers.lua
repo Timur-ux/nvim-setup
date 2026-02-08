@@ -1,5 +1,4 @@
 local map = vim.api.nvim_set_keymap
-local defaultOpts = { noremap = true, silent = true }
 
 map("n", "<leader>cj", "<C-w>j<C-w>c", { noremap = false, silent = true })
 map("n", "<leader>cl", "<C-w>l<C-w>c", { noremap = false, silent = true })
@@ -10,4 +9,9 @@ map("n", "<leader>gdl", "<C-W>v<C-W>lgd", { noremap = false, silent = true })
 map("n", "<leader>gdh", "<C-W>vgd", { noremap = false, silent = true })
 map("n", "<leader>gdj", "<C-W>s<C-W>jgd", { noremap = false, silent = true })
 map("n", "<leader>gdk", "<C-W>sgd", { noremap = false, silent = true })
+
+map("n", "<leader>bt", "<C-W>T", {noremap = false, silent = true})
+
+map("n", "<leader>bsv", "<C-W><C-V>", {noremap = false, silent = true})
+map("n", "<leader>bsh", ":sp<CR>", {noremap = false, silent = true})
 

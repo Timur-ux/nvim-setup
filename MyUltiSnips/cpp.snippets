@@ -1,4 +1,24 @@
 global !p
+def getHandleMethodBody(baseClass):
+	if baseClass == "HttpHandlerJsonBase":
+		return r"""{
+		request.GetHttpResponse().SetContentType(http::content_type::kApplicationJson);
+		auto body = request_json.As</*request body type there*/>();
+
+		// Some handle logic
+
+		/*response body type*/ response /* = ...*/;
+		return formats::json::ValueBuilder{response}.ExtractValue();
+		}"""
+	else:
+		return r"""{
+		request.GetHttpResponse().SetContentType(http::content_type::kTextPlain);
+		// Some handle logic
+
+		std::string response /* = ...*/;
+		return response;
+		}"""
+
 def getHandleMethod(baseClass, currentClass = ""):
 	prefix = currentClass + '::' if currentClass != "" else ""
 	if baseClass == "HttpHandlerJsonBase":
@@ -273,11 +293,11 @@ public:
 endsnippet
 
 snippet ushandler "userver handler template" w
-#ifndef HANDLER_`!p snip.rv = toDefine(t[2])`
-#define HANDLER_`!p snip.rv = toDefine(t[2])`
+#ifndef `!p snip.rv = toDefine(t[2])`
+#define `!p snip.rv = toDefine(t[2])`
 #pragma once
 
-#include <userver/server/handlers/`!p snip.rv = toUnderscore(t[3])`>
+#include <userver/server/handlers/`!p snip.rv = toUnderscore(t[3])`.hpp>
 
 namespace ${1:SERVICE_NAMESPACE} {
 using namespace userver;
@@ -288,7 +308,7 @@ public:
 	using HttpRequest = server::http::HttpRequest;
 	using RequestContext = server::request::RequestContext;
 	`!p snip.rv = "using Value = formats::json::Value;" if t[3] == "HttpHandlerJsonBase" else ""`
-	`!p snip.rv = f"using {t[3]}:{t[3]};" if len(t[4]) < 10 else ""`
+	`!p snip.rv = f"using {t[3]}::{t[3]};" if len(t[4]) < 10 else ""`
 
 	${4:$2(const components::ComponentConfig &config,
                   const components::ComponentContext &component_context);}
@@ -297,15 +317,15 @@ public:
 };
 } // !$1
 
-#endif // !HANDLER_`!p snip.rv = toDefine(t[2])`
+#endif // !`!p snip.rv = toDefine(t[2])`
 
 // HEADER PART ENDS
 // CPP SOURCE PART BEGIN(place part below to cpp source file)
-#include "${5:handlers/}${6:`!p snip.rv = t[2].lower()[:-7] if t[2].endswith("Handler") else t[2].lower()`}.hpp"
+#include "${5:handlers/}${6:`!p snip.rv = toUnderscore(t[2]).replace("_handler", "")`}.hpp"
 
 namespace $1 {
-`!p snip.rv = (f"{t[4][:-1]}\n\t: {t[3]}" + r"(config, component_context) {}") if len(t[4]) > 10 else ""`
+`!p snip.rv = (f"{t[2]}::{t[4][:-1]}\n\t: {t[3]}" + r"(config, component_context) {}") if len(t[4]) > 10 else ""`
 
-`!p snip.rv = (f"{t[2]}::" if t[3] == "HttpHandlerJsonBase" else "") + getHandleMethod(t[3], t[2]) + r" {}"`
+`!p snip.rv = (f"{t[2]}::" if t[3] == "HttpHandlerJsonBase" else "") + getHandleMethod(t[3], t[2]) + getHandleMethodBody(t[3])`
 } // !$1
 endsnippet
