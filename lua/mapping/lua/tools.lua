@@ -2,7 +2,7 @@ local map = vim.api.nvim_set_keymap
 local defaultOpts = { noremap = true, silent = true }
 
 map("n", "<leader>T", ":ToggleTerm<CR>", defaultOpts)
-map("n", "<c-a>", [[<cmd>lua require('telescope.builtin').find_files()<cr>]], defaultOpts)
+map("n", "<c-s-a>", [[<cmd>lua require('telescope.builtin').find_files()<cr>]], defaultOpts)
 map("n", "<c-p>", [[<cmd>lua require('telescope.builtin').buffers()<cr>]], defaultOpts)
 
 
