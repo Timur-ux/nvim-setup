@@ -329,3 +329,50 @@ namespace $1 {
 `!p snip.rv = (f"{t[2]}::" if t[3] == "HttpHandlerJsonBase" else "") + getHandleMethod(t[3], t[2]) + getHandleMethodBody(t[3])`
 } // !$1
 endsnippet
+
+snippet uscomponent "userver component template" w
+#ifndef `!p snip.rv = toDefine(t[2])`
+#define `!p snip.rv = toDefine(t[2])`
+#pragma once
+
+#include <userver/components/component_base.hpp>
+#include <userver/yaml_config/schema.hpp>
+
+namespace ${1:SERVICE_NAMESPACE} {
+using namespace userver;
+class ${2:CompName} final : public ${3:components::ComponentBase} {
+public:
+	constexpr static std::string_view kName = "`!p snip.rv = toUnderscore(t[2], '-')`";
+
+	$2(const components::ComponentConfig & config, const components::ComponentContext & context);
+	static yaml_config::Schema GetStaticConfigSchema();
+
+};
+} // !$1
+
+#endif // !`!p snip.rv = toDefine(t[2])`
+
+// HEADER PART ENDS
+// CPP SOURCE PART BEGIN(place part below to cpp source file)
+#include "${4:components/}${5:`!p snip.rv = toUnderscore(t[2])`}.hpp"
+#include <userver/yaml_config/merge_schemas.hpp>
+
+namespace $1 {
+$2::$2(const components::ComponentConfig & config, const components::ComponentContext & context)
+	: $3(config, context) {
+}
+
+yaml_config::Schema $2::GetStaticConfigSchema() {
+return yaml_config::MergeSchemas<components::ComponentBase>(R"(
+)");
+}
+} // !$1
+endsnippet
+
+snippet try "try catch statement" wb
+try {
+	${1:${VISUAL}}
+} catch (${2:${3|std::exception,std::runtime_error,std::invalid_argument,std::logic_error|} &e}) {
+	$0
+}
+endsnippet

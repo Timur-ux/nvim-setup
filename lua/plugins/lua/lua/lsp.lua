@@ -1,6 +1,19 @@
 return {
 	{
-		"WhoIsSethDaniel/mason-tool-installer.nvim"
+		"apyra/nvim-unity-sync",
+		lazy = false,
+		config = function()
+			require("unity.plugin").setup()
+		end,
+	},
+	{
+		"Hoffs/omnisharp-extended-lsp.nvim",
+	},
+	-- {
+	-- 	"OmniSharp/omnisharp-vim",
+	-- },
+	{
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	{
 		"preservim/vim-markdown",
@@ -32,9 +45,6 @@ return {
 		"williamboman/mason.nvim",
 		"williamboman/mason-lspconfig.nvim",
 		"neovim/nvim-lspconfig",
-	    config = function(args)
-	      MasonInstallDefaults()
-	    end,
 	},
 	{
 		"p00f/clangd_extensions.nvim",
@@ -54,7 +64,7 @@ return {
 	{
 		"SirVer/ultisnips",
 		init = function()
-      vim.g.UltiSnipsEditSplit = "tabdo"
+			vim.g.UltiSnipsEditSplit = "tabdo"
 		end,
 	},
 	{

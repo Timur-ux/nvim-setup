@@ -26,11 +26,12 @@ require("mason-tool-installer").setup({
 		"bash-language-server",
 		"dockerfile-language-server",
 		"autoflake",
+		"autoflake",
+		"omnisharp",
 	},
 })
 
 local lspCapabilities = require("cmp_nvim_lsp").default_capabilities()
-local lsp = require("lspconfig")
 local cfg = {
 	capabilities = lspCapabilities,
 }
@@ -50,6 +51,8 @@ vim.lsp.config("dockerls", {
 	},
 })
 
+vim.lsp.config("omnisharp", require("settings.lua.lsp.omnisharp"))
+
 vim.lsp.enable({
 	"clangd",
 	"pyright",
@@ -59,31 +62,11 @@ vim.lsp.enable({
 	"neocmake",
 	"texlab",
 	"bashls",
-	"docker_compose_language_service",
 	"dockerls",
+	"omnisharp",
 })
+
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
--- lsp.clangd.setup(cfg)
--- lsp.pyright.setup(cfg)
--- lsp.lua_ls.setup(cfg)
--- lsp.ts_ls.setup(cfg)
--- lsp.glsl_analyzer.setup(cfg)
--- lsp.cmake.setup(cfg)
--- lsp.texlab.setup(cfg)
--- lsp.bashls.setup(cfg)
--- lsp.dockerls.setup({
--- 	capabilities = lspCapabilities,
--- 	filetypes = { "dockerfile", "Dockerfile" },
--- 	settings = {
--- 		docker = {
--- 			languageserver = {
--- 				formatter = {
--- 					ignoreMultilineInstructions = true,
--- 				},
--- 			},
--- 		},
--- 	},
--- })
 
 vim.api.nvim_create_autocmd("LspAttach", {
 	desc = "LSP actions",
@@ -131,26 +114,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-local sign = function(opts)
-	vim.fn.sign_define(opts.name, {
-		texthl = opts.name,
-		text = opts.text,
-		numhl = "",
-	})
-end
-
-sign({ name = "DiagnosticSignError", text = "" })
-sign({ name = "DiagnosticSignWarn", text = "" })
-sign({ name = "DiagnosticSignHint", text = "" })
-sign({ name = "DiagnosticSignInfo", text = "" })
-
 vim.diagnostic.config({
-	virtual_text = false,
+	-- virtual_text = {
+	-- 	format = function(diagnostic)
+	-- 		return string.format("%s", diagnostic.message)
+	-- 	end,
+	-- },
 	severity_sort = true,
 	float = {
 		border = "rounded",
 	},
 })
+
 vim.lsp.buf.hover({ border = "rounded" })
 vim.lsp.buf.signature_help({ border = "rounded" })
 

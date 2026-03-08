@@ -89,3 +89,12 @@ snippet on "ON" wA
 ON
 endsnippet
 
+snippet crfunc "create trigger function" wb
+CREATE OR REPLACE FUNCTION ${1:func_name}(${2:args})
+RETURNS TRIGGER AS $$
+BEGIN
+$0
+END;
+$$ LANGUAGE plpgsql;
+endsnippet
+
