@@ -1,4 +1,5 @@
 require("mason").setup({
+	PATH="append",
 	registries = {
 		"github:mason-org/mason-registry",
 		"github:Timur-ux/tias-registry",

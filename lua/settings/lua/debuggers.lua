@@ -116,7 +116,6 @@ dap.configurations.cpp = {
 		cwd = "${workspaceFolder}",
 		stopAtEntry = true,
 		MIMode = "gdb",
-		miDebuggerPath = "/usr/bin/gdb",
 		setupCommands = {
 			{
 				text = "-enable-pretty-printing",
