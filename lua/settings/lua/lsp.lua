@@ -55,6 +55,7 @@ vim.lsp.config("dockerls", {
 vim.lsp.config("omnisharp", require("settings.lua.lsp.omnisharp"))
 
 vim.lsp.enable({
+	"nil_ls",
 	"clangd",
 	"pyright",
 	"lua_ls",

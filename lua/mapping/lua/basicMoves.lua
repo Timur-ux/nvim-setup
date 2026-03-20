@@ -12,6 +12,9 @@ map("i", "<C-л>", "<C-k>", { noremap = false })
 map("t", "jk", "<C-\\><C-n>", { noremap = false, silent = true })
 map("t", "JK", "<C-\\><C-n>", { noremap = false, silent = true })
 
+map("n", "<C-j>", "jzz", { noremap = false, silent = true })
+map("n", "<C-k>", "kzz", { noremap = false, silent = true })
+
 map("n", "<c-d>", "<c-d>zz", defaultOpts)
 map("n", "<c-u>", "<c-u>zz", defaultOpts)
 

@@ -1,6 +1,9 @@
 local util = require("formatter.util")
 
 local configs = {
+	nix = {
+		require("formatter.filetypes.nix").alejandra
+	},
 	lua = {
 		require("formatter.filetypes.lua").stylua,
 		function()
@@ -83,16 +86,17 @@ require("formatter").setup({
 	log_level = vim.log.levels.WARN,
 
 	filetype = {
-		javascript = configs["js"],
-		lua = configs["lua"],
-		c = configs["cpp"],
-		cpp = configs["cpp"],
-		tex = configs["latex"],
-		json = configs["json"],
-		javascriptreact = configs["jsx"],
-		typescriptreact = configs["tsx"],
-		typescript = configs["ts"],
-		python = configs["python"],
+		javascript = configs.js,
+		lua = configs.lua,
+		c = configs.cpp,
+		cpp = configs.cpp,
+		tex = configs.latex,
+		json = configs.json,
+		javascriptreact = configs.jsx,
+		typescriptreact = configs.tsx,
+		typescript = configs.ts,
+		python = configs.python,
+		nix = configs.nix,
 		["*"] = {
 			require("formatter.filetypes.any").remove_trailing_whitespace,
 		},

@@ -15,3 +15,4 @@ map("n", "<leader>bt", "<C-W>T", {noremap = false, silent = true})
 map("n", "<leader>bsv", "<C-W><C-V>", {noremap = false, silent = true})
 map("n", "<leader>bsh", ":sp<CR>", {noremap = false, silent = true})
 
+map("n", "<leader>sb", ':windo set scrollbind!<CR>:set scrollbind?<CR>', {noremap = true, silent = false})
