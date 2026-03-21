@@ -1,3 +1,9 @@
+# DEPRECATED
+
+This config was developing for few years and now contains many unused trash that slows down neovim start and work
+
+Now i develop new neovim config based on lazyvim preinstall: [link](https://github.com/Timur-ux/lazyvim-setup)
+
 # nvim-setup
 My neovim config 
 
